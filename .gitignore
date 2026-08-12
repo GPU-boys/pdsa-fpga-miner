@@ -8,3 +8,28 @@
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Large archives (not tracked, over GitHub 100 MB limit)
+*.zip
+
+# Sensitive / personal notes
+1.bitcoin wallet and stuff and how.txt
+
+# Conversation / work logs
+chat.txt
+PDSA_FPGA_CONVERSATION_LOG.docx
+
+# Older duplicate project snapshots
+pdsa_updated_on_3_6/
+pdsa_updated_on_3_6_newv/
+
+# Superseded paper/report versions
+FPGA_DPR_Mining_IEEE_Paper_v2_BACKUP.docx
+FPGA_DPR_Mining_IEEE_Paper_v3.docx
+FPGA_DPR_Mining_IEEE_Paper_v4.docx
+FPGA_DPR_Mining_IEEE_Paper_v5.docx
+FPGA_DPR_Mining_IEEE_Paper_v6.docx
+FPGA_DPR_Mining_IEEE_Paper_v7.docx
+FPGA_DPR_Mining_IEEE_Paper_v8.docx
+PDSA_FPGA_Full_Report.docx
+Transactions-template-and-instructions-on-how-to-create-your-article-formatted (4).docx
