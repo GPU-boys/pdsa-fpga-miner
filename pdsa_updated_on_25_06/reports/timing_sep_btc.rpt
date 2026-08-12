@@ -1,0 +1,113 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version      : Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
+| Date              : Tue Jun  2 18:22:32 2026
+| Host              : Abhishek running 64-bit major release  (build 9200)
+| Command           : report_timing -file D:/pdsa_fpga_dfx_build/output/timing_sep_btc.rpt
+| Design            : pdsa_system_wrapper
+| Device            : xck26-sfvc784
+| Speed File        : -2LV  PRODUCTION 1.30 05-15-2022
+| Design State      : Physopt postRoute
+| Temperature Grade : C
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (MET) :             3.256ns  (required time - arrival time)
+  Source:                 pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/csr_decouple_reg/C
+                            (rising edge-triggered cell FDCE clocked by clk_pl_0  {rise@0.000ns fall@5.156ns period=10.312ns})
+  Destination:            pdsa_system_i/rm_0/inst/u_rm/u_btc/found_hash_reg[150]/CE
+                            (rising edge-triggered cell FDCE clocked by clk_pl_0  {rise@0.000ns fall@5.156ns period=10.312ns})
+  Path Group:             clk_pl_0
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            10.312ns  (clk_pl_0 rise@10.312ns - clk_pl_0 rise@0.000ns)
+  Data Path Delay:        6.722ns  (logic 1.076ns (16.008%)  route 5.646ns (83.992%))
+  Logic Levels:           13  (CARRY8=10 LUT2=1 LUT6=2)
+  Clock Path Skew:        -0.094ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    2.376ns = ( 12.688 - 10.312 ) 
+    Source Clock Delay      (SCD):    2.655ns
+    Clock Pessimism Removal (CPR):    0.185ns
+  Clock Uncertainty:      0.159ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Discrete Jitter          (DJ):    0.310ns
+    Phase Error              (PE):    0.000ns
+  Clock Net Delay (Source):      2.388ns (routing 1.045ns, distribution 1.343ns)
+  Clock Net Delay (Destination): 2.160ns (routing 0.955ns, distribution 1.205ns)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Partition      PBlock               Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------------------------------------------
+                         (clock clk_pl_0 rise edge)
+                                                      0.000     0.000 r                                      
+    PS8_X0Y0             PS8                          0.000     0.000 r  static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.229     0.229    static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.038     0.267 r  static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3466, routed)        2.388     2.655    static                              pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/clk
+    SLICE_X5Y49          FDCE                                         r  static                              pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/csr_decouple_reg/C
+  -------------------------------------------------------------------    -------------------------------------------------------
+    SLICE_X5Y49          FDCE (Prop_DFF_SLICEM_C_Q)
+                                                      0.116     2.771 f  static                              pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/csr_decouple_reg/Q
+                         net (fo=1188, routed)        1.314     4.084    static                              pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/csr_decouple_reg_0
+    SLICE_X4Y5           LUT2 (Prop_C5LUT_SLICEM_I1_O)
+                                                      0.093     4.177 r  static                              pdsa_system_i/static_0/inst/u_static/u_shell/u_csr/rp_midstate[111]_INST_0/O
+                         net (fo=5, routed)           1.227     5.404    boundary                            pdsa_system_i/rm_0/inst/u_rm/u_btc/rp_midstate[111]
+    SLICE_X3Y76          LUT6 (Prop_B6LUT_SLICEL_I4_O)
+                                                      0.138     5.542 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__5_i_1/O
+                         net (fo=1, routed)           0.955     6.497    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__5_i_1_n_0
+    SLICE_X2Y40          CARRY8 (Prop_CARRY8_SLICEM_DI[7]_CO[7])
+                                                      0.080     6.577 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__5/CO[7]
+                         net (fo=1, routed)           0.030     6.607    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__5_n_0
+    SLICE_X2Y41          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     6.672 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__6/CO[7]
+                         net (fo=1, routed)           0.030     6.702    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__6_n_0
+    SLICE_X2Y42          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     6.767 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__7/CO[7]
+                         net (fo=1, routed)           0.030     6.797    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__7_n_0
+    SLICE_X2Y43          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     6.862 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__8/CO[7]
+                         net (fo=1, routed)           0.030     6.892    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__8_n_0
+    SLICE_X2Y44          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     6.957 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__9/CO[7]
+                         net (fo=1, routed)           0.030     6.987    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__9_n_0
+    SLICE_X2Y45          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     7.052 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__10/CO[7]
+                         net (fo=1, routed)           0.030     7.082    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__10_n_0
+    SLICE_X2Y46          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     7.147 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__11/CO[7]
+                         net (fo=1, routed)           0.030     7.177    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__11_n_0
+    SLICE_X2Y47          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     7.242 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__12/CO[7]
+                         net (fo=1, routed)           0.030     7.272    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__12_n_0
+    SLICE_X2Y48          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.065     7.337 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__13/CO[7]
+                         net (fo=1, routed)           0.030     7.367    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__13_n_0
+    SLICE_X2Y49          CARRY8 (Prop_CARRY8_SLICEM_CI_CO[7])
+                                                      0.073     7.440 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/running2_carry__14/CO[7]
+                         net (fo=195, routed)         0.452     7.892    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/u_eng0/CO[0]
+    SLICE_X2Y59          LUT6 (Prop_F6LUT_SLICEM_I2_O)
+                                                      0.056     7.948 r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/u_eng0/found_hash[255]_i_1/O
+                         net (fo=288, routed)         1.428     9.376    reconfigurable                      pdsa_system_i/rm_0/inst/u_rm/u_btc/u_eng0_n_16
+    SLICE_X2Y5           FDCE                                         r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/found_hash_reg[150]/CE
+  -------------------------------------------------------------------    -------------------------------------------------------
+
+                         (clock clk_pl_0 rise edge)
+                                                     10.312    10.312 r                                      
+    PS8_X0Y0             PS8                          0.000    10.312 r  static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/PS8_i/PLCLK[0]
+                         net (fo=1, routed)           0.181    10.493    static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/pl_clk_unbuffered[0]
+    BUFG_PS_X0Y80        BUFG_PS (Prop_BUFG_PS_I_O)
+                                                      0.035    10.528 r  static                              pdsa_system_i/zynq_ultra_ps_e_0/inst/buffer_pl_clk_0.PL_CLK_0_BUFG/O
+    X0Y1 (CLOCK_ROOT)    net (fo=3466, routed)        2.160    12.688    boundary                            pdsa_system_i/rm_0/inst/u_rm/u_btc/clk
+    SLICE_X2Y5           FDCE                                         r  reconfigurable pblock_u_rp          pdsa_system_i/rm_0/inst/u_rm/u_btc/found_hash_reg[150]/C
+                         clock pessimism              0.185    12.873                                            
+                         clock uncertainty           -0.159    12.714                                            
+    SLICE_X2Y5           FDCE (Setup_HFF_SLICEM_C_CE)
+                                                     -0.081    12.633    reconfigurable   pblock_u_rp            pdsa_system_i/rm_0/inst/u_rm/u_btc/found_hash_reg[150]
+  -------------------------------------------------------------------
+                         required time                         12.633                                            
+                         arrival time                          -9.376                                            
+  -------------------------------------------------------------------
+                         slack                                  3.256                                            
+
+
+
+

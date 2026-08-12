@@ -1,0 +1,627 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Sat Jun 20 15:44:26 2026
+# Process ID         : 5936
+# Current directory  : C:/Users/abhis
+# Command line       : vivado.exe -mode batch -source D:\Projects\Crypto_miner_final_updated_on_18_06\New_updated\pdsa_updated_on_3_6_newv\build_scripts\build_bitstream.tcl -nojournal -log D:\Projects\Crypto_miner_final_updated_on_18_06\New_updated\pdsa_updated_on_3_6_newv\build_scripts\build_bitstream.tcl.results
+# Log file           : D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/build_scripts/build_bitstream.tcl.results
+# Journal file       : 
+# Running On         : Abhishek
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26100
+# Processor Detail   : AMD Ryzen 7 7435HS                             
+# CPU Frequency      : 3094 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 16989 MB
+# Swap memory        : 17179 MB
+# Total Virtual      : 34169 MB
+# Available Virtual  : 15998 MB
+#-----------------------------------------------------------
+source {D:\Projects\Crypto_miner_final_updated_on_18_06\New_updated\pdsa_updated_on_3_6_newv\build_scripts\build_bitstream.tcl}
+# set top_dir    "D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv"
+# set rtl_dir    "${top_dir}/rtl"
+# set xdc_dir    "${top_dir}/constraints"
+# set out_dir    "${top_dir}/bitstream"
+# set part       "xck26-sfvc784-2LV-c"
+# set top_module "pdsa_fpga_dfx_top"
+# file mkdir ${out_dir}
+# create_project -force pdsa_dfx ${out_dir}/vivado_project -part ${part}
+INFO: [ProjectBase 1-489] The host OS only allows 260 characters in a normal path. The project is stored in a path with more than 80 characters. If you experience issues with IP, Block Designs, or files not being found, please consider moving the project to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter.
+Current project path is 'D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/bitstream/vivado_project'
+create_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:09 . Memory (MB): peak = 559.992 ; gain = 221.445
+# add_files -norecurse [list \
+#   ${rtl_dir}/pdsa_fpga_dfx_top.sv       \
+#   ${rtl_dir}/pdsa_static_shell.sv       \
+#   ${rtl_dir}/pdsa_static_top.sv         \
+#   ${rtl_dir}/axi_lite_csr.sv            \
+#   ${rtl_dir}/rm_bitcoin.sv              \
+#   ${rtl_dir}/sha256d_multi_engine_hp.sv \
+#   ${rtl_dir}/sha256d_pipe_engine_hp.sv  \
+#   ${rtl_dir}/sha256d_real_engine.sv     \
+#   ${rtl_dir}/sha256_core_baseline.sv    \
+# ]
+# add_files -fileset constrs_1 ${xdc_dir}/pdsa_kv260.xdc
+# set_property top ${top_module} [current_fileset]
+# update_compile_order -fileset sources_1
+# synth_design -top ${top_module} -part ${part} -flatten_hierarchy rebuilt
+Command: synth_design -top pdsa_fpga_dfx_top -part xck26-sfvc784-2LV-c -flatten_hierarchy rebuilt
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Device 21-403] Loading part xck26-sfvc784-2LV-c
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 2568
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1854.957 ; gain = 212.602
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'pdsa_fpga_dfx_top' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/pdsa_fpga_dfx_top.sv:6]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_static_shell' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/pdsa_static_shell.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'axi_lite_csr' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/axi_lite_csr.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'axi_lite_csr' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/axi_lite_csr.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_static_shell' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/pdsa_static_shell.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'rm_bitcoin' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv:2]
+	Parameter NUM_ENGINES bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'sha256_core_baseline' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv:2]
+INFO: [Synth 8-226] default block is never used [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv:25]
+INFO: [Synth 8-6155] done synthesizing module 'sha256_core_baseline' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv:2]
+INFO: [Synth 8-6157] synthesizing module 'sha256d_multi_engine_hp' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:2]
+	Parameter NUM_ENGINES bound to: 32 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'sha256d_real_engine' [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:2]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:60]
+INFO: [Synth 8-6155] done synthesizing module 'sha256d_real_engine' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'sha256d_multi_engine_hp' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'rm_bitcoin' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv:2]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_fpga_dfx_top' (0#1) [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/pdsa_fpga_dfx_top.sv:6]
+WARNING: [Synth 8-6014] Unused sequential element first_hash_reg was removed.  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:54]
+WARNING: [Synth 8-6014] Unused sequential element merkle_reg_reg was removed.  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:64]
+WARNING: [Synth 8-6014] Unused sequential element timestamp_reg_reg was removed.  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:65]
+WARNING: [Synth 8-6014] Unused sequential element bits_reg_reg was removed.  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:66]
+WARNING: [Synth 8-6014] Unused sequential element nonce_reg_reg was removed.  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:67]
+WARNING: [Synth 8-7137] Register midstate_reg_reg in module sha256d_real_engine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:34]
+WARNING: [Synth 8-7137] Register blk1_reg in module sha256d_real_engine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:35]
+WARNING: [Synth 8-7137] Register blk2_reg in module sha256d_real_engine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv:43]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[0] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[1] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[2] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[3] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[4] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[5] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[6] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[7] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[8] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[9] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[10] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[11] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[12] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[13] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[14] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[15] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[16] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[17] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[18] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[19] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[20] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[21] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[22] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[23] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[24] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[25] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[26] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[27] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[28] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[29] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[30] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7137] Register engine_nonce_reg[31] in module sha256d_multi_engine_hp has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv:112]
+WARNING: [Synth 8-7129] Port rp_job_data[543] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[542] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[541] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[540] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[539] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[538] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[537] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[536] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[535] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[534] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[533] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[532] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[531] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[530] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[529] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[528] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[527] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[526] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[525] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[524] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[523] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[522] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[521] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[520] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[519] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[518] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[517] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[516] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[515] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[514] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[513] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port rp_job_data[512] in module rm_bitcoin is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_wstrb[3] in module axi_lite_csr is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_wstrb[2] in module axi_lite_csr is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_wstrb[1] in module axi_lite_csr is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_wstrb[0] in module axi_lite_csr is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_araddr[1] in module axi_lite_csr is either unconnected or has no load
+WARNING: [Synth 8-7129] Port s_axi_araddr[0] in module axi_lite_csr is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2032.547 ; gain = 390.191
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2032.547 ; gain = 390.191
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:10 . Memory (MB): peak = 2032.547 ; gain = 390.191
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:02 . Memory (MB): peak = 2035.266 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc]
+create_clock: Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 2395.906 ; gain = 39.023
+CRITICAL WARNING: [Constraints 18-602] set_input_delay: list contains '41' objects of types '(port)' other than the types '(input port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc:13]
+CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '65' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc:14]
+Finished Parsing XDC File [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.147 . Memory (MB): peak = 2395.906 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:05 ; elapsed = 00:00:04 . Memory (MB): peak = 2448.922 ; gain = 53.016
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:01:14 ; elapsed = 00:01:13 . Memory (MB): peak = 2450.477 ; gain = 808.121
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xck26-sfvc784-2LV-c
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:01:14 ; elapsed = 00:01:14 . Memory (MB): peak = 2450.477 ; gain = 808.121
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:01:14 ; elapsed = 00:01:14 . Memory (MB): peak = 2450.477 ; gain = 808.121
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'sha256_core_baseline'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'sha256d_real_engine'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                  S_IDLE |                              001 |                               00
+               S_COMPUTE |                              010 |                               01
+                 S_FINAL |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'sha256_core_baseline'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                              001 |                               00
+                   HASH1 |                              010 |                               01
+                   HASH2 |                              100 |                               10
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'one-hot' in module 'sha256d_real_engine'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:01:17 ; elapsed = 00:01:18 . Memory (MB): peak = 2450.477 ; gain = 808.121
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   64 Bit       Adders := 1     
+	   4 Input   32 Bit       Adders := 65    
+	   5 Input   32 Bit       Adders := 65    
+	   2 Input   32 Bit       Adders := 585   
+	   3 Input   32 Bit       Adders := 65    
+	   2 Input   27 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 65    
+	   2 Input    5 Bit       Adders := 1     
++---XORs : 
+	   3 Input     32 Bit         XORs := 325   
+	   2 Input     32 Bit         XORs := 65    
++---Registers : 
+	              512 Bit    Registers := 64    
+	              256 Bit    Registers := 196   
+	               64 Bit    Registers := 1     
+	               32 Bit    Registers := 1670  
+	               12 Bit    Registers := 1     
+	                8 Bit    Registers := 2     
+	                7 Bit    Registers := 65    
+	                5 Bit    Registers := 1     
+	                1 Bit    Registers := 308   
++---Muxes : 
+	   2 Input  640 Bit        Muxes := 1     
+	   2 Input  256 Bit        Muxes := 65    
+	   2 Input   64 Bit        Muxes := 3     
+	   2 Input   32 Bit        Muxes := 260   
+	   3 Input   32 Bit        Muxes := 1560  
+	   2 Input   27 Bit        Muxes := 1     
+	   3 Input    7 Bit        Muxes := 65    
+	   2 Input    5 Bit        Muxes := 2     
+	   2 Input    1 Bit        Muxes := 380   
+	  43 Input    1 Bit        Muxes := 42    
+	   3 Input    1 Bit        Muxes := 549   
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1248 (col length:96)
+BRAMs: 288 (col length: RAMB18 96 RAMB36 48)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:51 ; elapsed = 00:03:03 . Memory (MB): peak = 2450.477 ; gain = 808.121
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+ROM: Preliminary Mapping Report
++---------------------+------------+---------------+----------------+
+|Module Name          | RTL Object | Depth x Width | Implemented As | 
++---------------------+------------+---------------+----------------+
+|sha256_core_baseline | sha256_K   | 64x32         | LUT            | 
+|sha256_core_baseline | sha256_K   | 64x32         | LUT            | 
+|sha256_core_baseline | sha256_K   | 64x32         | LUT            | 
+|sha256_core_baseline | sha256_K   | 64x32         | LUT            | 
++---------------------+------------+---------------+----------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:12 ; elapsed = 00:03:27 . Memory (MB): peak = 2817.062 ; gain = 1174.707
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:06:02 ; elapsed = 00:06:32 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:07:49 ; elapsed = 00:08:29 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:08:17 ; elapsed = 00:08:58 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:08:18 ; elapsed = 00:08:59 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:09:01 ; elapsed = 00:09:46 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:09:03 ; elapsed = 00:09:48 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:09:19 ; elapsed = 00:10:06 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:09:20 ; elapsed = 00:10:07 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-------+------+
+|      |Cell   |Count |
++------+-------+------+
+|1     |BUFG   |     1|
+|2     |CARRY8 |  3929|
+|3     |LUT1   |     1|
+|4     |LUT2   | 39922|
+|5     |LUT3   | 15775|
+|6     |LUT4   | 23258|
+|7     |LUT5   | 19456|
+|8     |LUT6   | 18061|
+|9     |MUXF7  |    16|
+|10    |FDCE   | 86433|
+|11    |FDPE   |   543|
+|12    |FDRE   | 22528|
+|13    |IBUF   |    59|
+|14    |OBUF   |    43|
++------+-------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:09:21 ; elapsed = 00:10:08 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:08:20 ; elapsed = 00:09:19 . Memory (MB): peak = 4213.418 ; gain = 2153.133
+Synthesis Optimization Complete : Time (s): cpu = 00:09:22 ; elapsed = 00:10:09 . Memory (MB): peak = 4213.418 ; gain = 2571.062
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4213.418 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 4005 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 2 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc]
+create_clock: Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 4213.418 ; gain = 0.000
+CRITICAL WARNING: [Constraints 18-602] set_input_delay: list contains '41' objects of types '(port)' other than the types '(input port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc:13]
+CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '65' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed. [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc:14]
+Finished Parsing XDC File [D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/constraints/pdsa_kv260.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.159 . Memory (MB): peak = 4213.418 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 60 instances were transformed.
+  BUFG => BUFGCE: 1 instance 
+  IBUF => IBUF (IBUFCTRL, INBUF): 59 instances
+
+Synth Design complete | Checksum: 3fe76f96
+INFO: [Common 17-83] Releasing license: Synthesis
+35 Infos, 78 Warnings, 4 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:10:57 ; elapsed = 00:11:50 . Memory (MB): peak = 4213.418 ; gain = 3653.426
+# set_property HD.RECONFIGURABLE 1 [get_cells u_rp]
+INFO: [Vivado 12-24630] Instance: 'u_rp' is a DFX HD.RECONFIGURABLE module.
+# write_checkpoint -force ${out_dir}/post_synth_static.dcp
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:03 ; elapsed = 00:00:00.734 . Memory (MB): peak = 4213.418 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/bitstream/post_synth_static.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:21 ; elapsed = 00:00:14 . Memory (MB): peak = 4213.418 ; gain = 0.000
+# create_pblock pblock_u_rp
+# add_cells_to_pblock [get_pblocks pblock_u_rp] [get_cells u_rp]
+INFO: [Constraints 18-4422] SNAPPING_MODE is set so implementation will use the DERIVED_RANGES which may be different then the GRID_RANGES.
+# resize_pblock pblock_u_rp -add {SLICE_X0Y0:SLICE_X60Y239}
+# resize_pblock pblock_u_rp -add {BUFGCE_X0Y0:BUFGCE_X0Y95}
+# resize_pblock pblock_u_rp -add {BUFGCE_HDIO_X0Y0:BUFGCE_HDIO_X1Y7}
+# opt_design
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Project 1-461] DRC finished with 0 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:13 ; elapsed = 00:00:12 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Starting Cache Timing Information Task
+CRITICAL WARNING: [Constraints 18-602] set_input_delay: list contains '41' objects of types '(port)' other than the types '(input port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed.
+CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '65' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:31 ; elapsed = 00:00:27 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Starting Logic Optimization Task
+
+Phase 1 Initialization
+
+Phase 1.1 Core Generation And Design Setup
+Phase 1.1 Core Generation And Design Setup | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 1.2 Setup Constraints And Sort Netlist
+Phase 1.2 Setup Constraints And Sort Netlist | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Phase 1 Initialization | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 2 Timer Update And Timing Data Collection
+
+Phase 2.1 Detect if minReqCache needed
+Phase 2.1 Detect if minReqCache needed | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:04 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 2.2 Timer Update
+Phase 2.2 Timer Update | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:14 ; elapsed = 00:00:10 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 2.3 Timing Data Collection
+Phase 2.3 Timing Data Collection | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:10 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Phase 2 Timer Update And Timing Data Collection | Checksum: 18bf67276
+
+Time (s): cpu = 00:00:15 ; elapsed = 00:00:10 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 3 Retarget
+INFO: [Opt 31-1851] Number of loadless carry chains removed were: 0
+INFO: [Opt 31-1834] Total Chains To Be Transformed Were: 0 AND Number of Transformed insts Created are: 0
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 3 Retarget | Checksum: 24769db3e
+
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:16 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Retarget | Checksum: 24769db3e
+INFO: [Opt 31-389] Phase Retarget created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Retarget, 52 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 4 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 4 Constant propagation | Checksum: 1f9ee4faf
+
+Time (s): cpu = 00:00:23 ; elapsed = 00:00:19 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Constant propagation | Checksum: 1f9ee4faf
+INFO: [Opt 31-389] Phase Constant propagation created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Constant propagation, 1 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 5 Sweep
+INFO: [Constraints 18-11670] Building netlist checker database with flags, 0x8
+Done building netlist checker database: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.149 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Phase 5 Sweep | Checksum: 18a6e2885
+
+Time (s): cpu = 00:00:27 ; elapsed = 00:00:23 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Sweep | Checksum: 18a6e2885
+INFO: [Opt 31-389] Phase Sweep created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Sweep, 19072 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 6 BUFG optimization
+INFO: [Opt 31-1077] Phase BUFG optimization inserted 0 global clock buffer(s) for CLOCK_LOW_FANOUT.
+INFO: [Opt 31-129] Inserted BUFG to drive high-fanout reset|set|enable net. BUFG cell: u_rp/u_btc/gen_eng[26].u_eng/u_hash1/rst_n_BUFG_inst, Net: u_rp/u_btc/gen_eng[26].u_eng/u_hash1/rst_n
+Phase 6 BUFG optimization | Checksum: 1e26fae65
+
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:28 . Memory (MB): peak = 4213.418 ; gain = 0.000
+BUFG optimization | Checksum: 1e26fae65
+INFO: [Opt 31-662] Phase BUFG optimization created 1 cells of which 1 are BUFGs and removed 0 cells.
+
+Phase 7 Shift Register Optimization
+INFO: [Opt 31-1064] SRL Remap converted 0 SRLs to 0 registers and converted 0 registers of register chains to 0 SRLs
+Phase 7 Shift Register Optimization | Checksum: 1e26fae65
+
+Time (s): cpu = 00:00:34 ; elapsed = 00:00:29 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Shift Register Optimization | Checksum: 1e26fae65
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 8 Post Processing Netlist
+Phase 8 Post Processing Netlist | Checksum: 1e26fae65
+
+Time (s): cpu = 00:00:35 ; elapsed = 00:00:30 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Post Processing Netlist | Checksum: 1e26fae65
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Post Processing Netlist, 1 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 9 Finalization
+
+Phase 9.1 Finalizing Design Cores and Updating Shapes
+Phase 9.1 Finalizing Design Cores and Updating Shapes | Checksum: 281963d48
+
+Time (s): cpu = 00:00:56 ; elapsed = 00:00:48 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Phase 9.2 Verifying Netlist Connectivity
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.661 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Phase 9.2 Verifying Netlist Connectivity | Checksum: 281963d48
+
+Time (s): cpu = 00:00:56 ; elapsed = 00:00:49 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Phase 9 Finalization | Checksum: 281963d48
+
+Time (s): cpu = 00:00:56 ; elapsed = 00:00:49 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |               0  |               0  |                                             52  |
+|  Constant propagation         |               0  |               0  |                                              1  |
+|  Sweep                        |               0  |               0  |                                          19072  |
+|  BUFG optimization            |               1  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                              1  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Ending Logic Optimization Task | Checksum: 281963d48
+
+Time (s): cpu = 00:00:56 ; elapsed = 00:00:49 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+Ending Power Optimization Task | Checksum: 281963d48
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.336 . Memory (MB): peak = 4213.418 ; gain = 0.000
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 281963d48
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.066 . Memory (MB): peak = 4213.418 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.161 . Memory (MB): peak = 4213.418 ; gain = 0.000
+INFO: [Common 17-83] Releasing license: Implementation
+26 Infos, 0 Warnings, 2 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:01:47 ; elapsed = 00:01:35 . Memory (MB): peak = 4213.418 ; gain = 0.000
+# place_design
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xck26'
+INFO: [Common 17-83] Releasing license: Implementation
+INFO: [DRC 23-27] Running DRC with 2 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+CRITICAL WARNING: [Constraints 18-602] set_input_delay: list contains '41' objects of types '(port)' other than the types '(input port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed.
+CRITICAL WARNING: [Constraints 18-602] set_output_delay: list contains '65' objects of types '(port)' other than the types '(output port,internal pin)' supported by the constraint. These objects will not be used for this constraint. Please review the object list and ensure unsupported object types are removed.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 2 threads
+ERROR: [DRC HDPR-50] Programmable Unit missing range: HD.RECONFIGURABLE primitive cell 'u_rp/u_btc/gen_eng[26].u_eng/u_hash1/rst_n_BUFG_inst' is not ranged by Pblock 'pblock_u_rp'. A reconfigurable Pblock must range all of its cell primitive types. SNAPPING_MODE is set on this Pblock. Although site range 'BUFGCE_HDIO' is included in the Pblock, it is removed by SNAPPING_MODE because other site ranges required by the Programmable Unit (PU) are missing or not created correctly. The missing site 'BUFGCE_HDIO_X0Y0' belongs to tile 'RCLK_HDIO_X7Y29'. To add the tile into PBLOCK 'pblock_u_rp', all its surrounding PU tile types, e. g. CLEM, HDIO_BOT_RIGHT, HDIO_TOP_RIGHT,  must be ranged into the same PBLOCK. Please refer UG909 for more details on PU requirement.
+CRITICAL WARNING: [DRC UTLZ-2] Resource utilization: LUT as Logic over-utilized in Pblock pblock_u_rp (Pblock pblock_u_rp has 86953 LUT as Logic(s) assigned to it, but only 72000 LUT as Logic(s) are available in the area range defined. The placer will attempt to combine LUT as Logic(s) to make the assigned LUT as Logic(s) fit in the Pblock range. This may cause increased runtime and negative performance. It is highly encouraged that either the Pblock slice range is increased or fewer LUT as Logic(s) are assigned to the Pblock.)
+INFO: [Vivado_Tcl 4-198] DRC finished with 1 Errors, 1 Critical Warnings
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+ERROR: [Vivado_Tcl 4-23] Error(s) found during DRC. Placer not run.
+9 Infos, 0 Warnings, 3 Critical Warnings and 2 Errors encountered.
+place_design failed
+place_design: Time (s): cpu = 00:00:48 ; elapsed = 00:00:30 . Memory (MB): peak = 4213.418 ; gain = 0.000
+ERROR: [Common 17-39] 'place_design' failed due to earlier errors.
+
+    while executing
+"place_design"
+    (file "D:\Projects\Crypto_miner_final_updated_on_18_06\New_updated\pdsa_updated_on_3_6_newv\build_scripts\build_bitstream.tcl" line 45)
+INFO: [Common 17-206] Exiting Vivado at Sat Jun 20 15:58:55 2026...

@@ -1,0 +1,43 @@
+# do {D:\Projects\Crypto_miner_final_updated_on_18_06\New_updated\pdsa_updated_on_3_6_newv\simulation\sim_rm_kaspa.tcl}
+# D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl
+# D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/simulation
+# reading modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vmap 10.5b Lib Mapping Utility 2016.10 Oct  5 2016
+# vmap work_kaspa work_kaspa 
+# Modifying modelsim.ini
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:36:22 on Jun 25,2026
+# vlog -sv -work work_kaspa "+acc" D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha3_256_pipe_engine_hp.sv 
+# -- Compiling module sha3_256_pipe_engine_hp
+# 
+# Top level modules:
+# 	sha3_256_pipe_engine_hp
+# End time: 10:36:22 on Jun 25,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:36:22 on Jun 25,2026
+# vlog -sv -work work_kaspa "+acc" D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa.sv 
+# -- Compiling module rm_kaspa
+# 
+# Top level modules:
+# 	rm_kaspa
+# End time: 10:36:22 on Jun 25,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:36:22 on Jun 25,2026
+# vlog -sv -work work_kaspa "+acc" D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa_wrapper.v 
+# -- Compiling module rm_kaspa_wrapper
+# 
+# Top level modules:
+# 	rm_kaspa_wrapper
+# End time: 10:36:22 on Jun 25,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+# Start time: 10:36:22 on Jun 25,2026
+# vlog -sv -work work_kaspa "+acc" D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_kaspa.sv 
+# -- Compiling module tb_rm_kaspa
+# 
+# Top level modules:
+# 	tb_rm_kaspa
+# End time: 10:36:22 on Jun 25,2026, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0

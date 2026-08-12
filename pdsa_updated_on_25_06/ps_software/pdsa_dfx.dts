@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0
+/dts-v1/;
+/plugin/;
+
+/ {
+    fragment@0 {
+        target = <&fpga_full>;
+        overlay0: __overlay__ {
+            #address-cells = <2>;
+            #size-cells = <2>;
+
+            firmware-name = "pdsa_full_sep_btc.bit.bin";
+
+            pdsa_csr@a0000000 {
+                compatible = "simple-bus";
+                reg = <0x0 0xa0000000 0x0 0x10000>;
+                #address-cells = <1>;
+                #size-cells = <1>;
+                ranges = <0 0x0 0xa0000000 0x10000>;
+
+                csr@0 {
+                    compatible = "xlnx,axi-lite-csr-1.0";
+                    reg = <0x0 0x10000>;
+                    interrupt-parent = <&gpio>;
+                    interrupts = <0 0>;
+                };
+            };
+        };
+    };
+};

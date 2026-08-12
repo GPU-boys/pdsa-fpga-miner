@@ -1,0 +1,106 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/simulation
+vrm_kaspa
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1782363982
+!i10b 1
+!s100 gaSEBWS3E=S@EHR1=gDP?1
+IKIJ]>;m8KT9B1>TJO?>@92
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 rm_kaspa_sv_unit
+S1
+R0
+Z4 w1781610968
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa.sv
+L0 2
+Z5 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z6 !s108 1782363982.000000
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa.sv|
+!s90 -sv|-work|work_kaspa|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa.sv|
+!i113 1
+Z7 o-sv -work work_kaspa +acc
+Z8 tCvgOpt 0
+vrm_kaspa_wrapper
+R1
+R2
+!i10b 1
+!s100 BOD8Q3QlZ<T:oXfXFfWAc1
+I1Y03m<dA;EHJLB?Mm@iK]1
+R3
+!s105 rm_kaspa_wrapper_v_unit
+S1
+R0
+R4
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa_wrapper.v
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa_wrapper.v
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa_wrapper.v|
+!s90 -sv|-work|work_kaspa|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_kaspa_wrapper.v|
+!i113 1
+R7
+R8
+vsha3_256_pipe_engine_hp
+R1
+R2
+!i10b 1
+!s100 AY^_LU<e1`>3LAYfUN?X80
+IE_QbMgaE_kO^?P_Vmn_dL2
+R3
+!s105 sha3_256_pipe_engine_hp_sv_unit
+S1
+R0
+w1781943758
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha3_256_pipe_engine_hp.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha3_256_pipe_engine_hp.sv
+L0 6
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha3_256_pipe_engine_hp.sv|
+!s90 -sv|-work|work_kaspa|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha3_256_pipe_engine_hp.sv|
+!i113 1
+R7
+R8
+vtb_rm_kaspa
+R1
+R2
+!i10b 1
+!s100 S<V`=98Bo3ezf@cfGAQXn1
+ID5i2g12b?glO0`ai2`RIf3
+R3
+!s105 tb_rm_kaspa_sv_unit
+S1
+R0
+w1781942224
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_kaspa.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_kaspa.sv
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_kaspa.sv|
+!s90 -sv|-work|work_kaspa|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_kaspa.sv|
+!i113 1
+R7
+R8

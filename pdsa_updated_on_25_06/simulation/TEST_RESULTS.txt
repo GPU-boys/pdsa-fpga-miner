@@ -1,0 +1,43 @@
+PDSA-FPGA RM Unit Test Results
+================================
+Date: June 2, 2026
+Simulator: ModelSim ASE 10.5b
+
+=== rm_bitcoin (real SHA-256d engine, 20 engines) ===
+Pipeline depth: 133 cycles (1 setup + 64 hash1 + 1 mid + 64 hash2 + 1 done)
+  T1 rp_algo_id......... PASS (01h)
+  T2 busy after start... PASS
+  T3 valid_out asserted. PASS (fork/join with timeout)
+  T4 hash_count incr.... PASS (count=20)
+  T5 stop de-asserts.... PASS
+  T6 found w/ hash<target PASS (nonce=0x00000001)
+  -----------------------------------------
+  Total: 6 PASS, 0 FAIL
+
+=== rm_kaspa (real Keccak SHA-3-256, 1 engine) ===
+Pipeline depth: 24 rounds (theta/rho/pi/chi/iota)
+  T1 rp_algo_id......... PASS (02h)
+  T2 rp_busy............ PASS
+  T3 hash correct....... PASS (Keccak-f[1600] verified)
+  T4 pipeline depth..... PASS (22 cycles)
+  T5 hash_count incr.... PASS (count=1)
+  T6 found w/ hash<target PASS (count=1)
+  -----------------------------------------
+  Total: 6 PASS, 0 FAIL
+
+=== Summary ===
+All 12 tests PASSED (12/12).
+
+Bug fixed during re-test (June 2):
+  T3 valid_out: rp_valid_out (= rp_found) is a single-cycle pulse.
+  Old test checked combinatorial state 200 cycles after start,
+  missing the narrow pulse. Changed to fork/join with 500-cycle
+  timeout (same pattern as T6).
+
+Testbench files:      D:\pdsa_updated_on_2_6\rtl\tb_rm_bitcoin.sv
+                      D:\pdsa_updated_on_2_6\rtl\tb_rm_kaspa.sv
+Log files:            D:\pdsa_updated_on_2_6\simulation\sim_rm_bitcoin.log
+                      D:\pdsa_updated_on_2_6\simulation\sim_rm_kaspa.log
+Build script:         D:\pdsa_updated_on_2_6\simulation\run_sim.bat
+                      D:\pdsa_updated_on_2_6\simulation\sim_rm_bitcoin.tcl
+                      D:\pdsa_updated_on_2_6\simulation\sim_rm_kaspa.tcl

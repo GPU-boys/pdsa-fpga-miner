@@ -1,0 +1,10 @@
+# Vivado temporary / run-time files
+.Xil/
+*.jou
+*.log
+*.backup.jou
+
+# OS / editor junk
+Thumbs.db
+Desktop.ini
+.DS_Store

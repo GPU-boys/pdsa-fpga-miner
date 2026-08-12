@@ -1,0 +1,563 @@
+================================================================================
+FULL DOCUMENT TEXT EXTRACTION
+Source: PDSA_FPGA_Full_Report_v2.docx
+================================================================================
+
+[Style: Normal] 
+[Style: Normal] PDSA-FPGA
+[Style: Normal] Partial Dynamic Self-Reconfiguration Architecture
+for Runtime-Crypto-Algorithm Switching
+[Style: Normal] Complete Implementation Report
+[Style: Normal] 
+[Style: Normal] Target: Xilinx Kria KV260 SOM (XCZU5EV-2SFVC784E)
+[Style: Normal] Tool: Vivado v.2025.2 | State: Post-Implementation (Routed)
+[Style: Normal] PL Clock: 100 MHz | ARM Cortex-A53 @ 1.2 GHz | Date: July 2026
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 1. System Architecture
+[Style: Normal] The PDSA-FPGA system uses Dynamic Function eXchange (DFX) to swap mining algorithm modules at runtime. The Zynq UltraScale+ PS communicates with the Static Shell via AXI-Lite through an AXI SmartConnect. The Reconfigurable Partition contains either a Bitcoin (20x SHA-256d engines) or Kaspa mining RM, swapped via DFX without affecting the static shell.
+[Style: Normal] 
+[Style: Normal] Figure 1: PDSA-FPGA System Block Diagram (from pdsa_system.bd)
+[Style: Normal] 
+[Style: Heading 1] 2. FPGA Resource Utilization
+[Style: Normal] Resource utilization from Vivado v.2025.2 post-implementation reports. Device: xck26-sfvc784-2LV-c (Kria KV260). Two RM configurations are reported: Bitcoin (20x SHA-256d engines) and Kaspa (Cuckatoo31/29).
+[Style: Heading 2] 2.1 Full Design with Bitcoin RM (Static Shell + 20x SHA-256d)
+[Style: Normal] Source: utilization_static_full.rpt | Design: pdsa_fpga_dfx_top | State: Routed | Date: Jun 25 2026
+
+--- TABLE ---
+  Row 0: Resource || Used || Available || Util%
+  Row 1: CLB LUTs || 58,110 || 117,120 || 49.62%
+  Row 2: CLB Registers || 69,736 || 234,240 || 29.77%
+  Row 3: CARRY8 || 2,489 || 14,640 || 17.00%
+  Row 4: F7 Muxes || 16 || 58,560 || 0.03%
+  Row 5: CLBs || 9,297 || 14,640 || 63.50%
+  Row 6: Block RAM || 0 || 144 || 0.00%
+  Row 7: DSP48 || 0 || 1,248 || 0.00%
+  Row 8: IOBs || 102 || 189 || 53.97%
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 2.2 Bitcoin RM Only (20x SHA-256d Engines)
+[Style: Normal] Source: utilization_rm_bitcoin.rpt | Design: rm_bitcoin | State: Synthesized | Date: Jun 24 2026
+
+--- TABLE ---
+  Row 0: Resource || Used || Available || Util%
+  Row 1: CLB LUTs || 57,153 || 117,120 || 48.80%
+  Row 2: CLB Registers || 67,978 || 234,240 || 29.02%
+  Row 3: CARRY8 || 2,475 || 14,640 || 16.91%
+  Row 4: Control Sets || 250 || 29,280 || 0.85%
+  Row 5: Block RAM || 0 || 144 || 0.00%
+  Row 6: DSP48 || 0 || 1,248 || 0.00%
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 2.3 Full Design with Kaspa RM (Static Shell + Cuckatoo31/29)
+[Style: Normal] Source: utilization_with_kaspa.rpt | Design: pdsa_fpga_dfx_top | State: Routed | Date: Jun 25 2026
+
+--- TABLE ---
+  Row 0: Resource || Used || Available || Util%
+  Row 1: CLB LUTs || 4,328 || 117,120 || 3.70%
+  Row 2: CLB Registers || 3,454 || 234,240 || 1.47%
+  Row 3: CARRY8 || 38 || 14,640 || 0.26%
+  Row 4: F7 Muxes || 16 || 58,560 || 0.03%
+  Row 5: CLBs || 1,076 || 14,640 || 7.35%
+  Row 6: Block RAM || 0 || 144 || 0.00%
+  Row 7: DSP48 || 0 || 1,248 || 0.00%
+  Row 8: IOBs || 102 || 189 || 53.97%
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 2.4 Kaspa RM Only (Cuckatoo31/29 Engine)
+[Style: Normal] Source: utilization_rm_kaspa.rpt | Design: rm_kaspa | State: Synthesized | Date: Jun 25 2026
+
+--- TABLE ---
+  Row 0: Resource || Used || Available || Util%
+  Row 1: CLB LUTs || 3,099 || 117,120 || 2.65%
+  Row 2: CLB Registers || 1,696 || 234,240 || 0.72%
+  Row 3: CARRY8 || 24 || 14,640 || 0.16%
+  Row 4: Control Sets || 4 || 29,280 || 0.01%
+  Row 5: Block RAM || 0 || 144 || 0.00%
+  Row 6: DSP48 || 0 || 1,248 || 0.00%
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 2.5 Resource Comparison
+
+--- TABLE ---
+  Row 0: Component || Full+BTC (Routed) || BTC RM (Synth) || Full+KASPA (Routed) || KASPA RM (Synth)
+  Row 1: LUTs || 58,110 (49.62%) || 57,153 (48.80%) || 4,328 (3.70%) || 3,099 (2.65%)
+  Row 2: FFs || 69,736 (29.77%) || 67,978 (29.02%) || 3,454 (1.47%) || 1,696 (0.72%)
+  Row 3: CARRY8 || 2,489 (17.00%) || 2,475 (16.91%) || 38 (0.26%) || 24 (0.16%)
+  Row 4: BRAM || 0 || 0 || 0 || 0
+  Row 5: DSP || 0 || 0 || 0 || 0
+  Row 6: CLBs || 9,297 (63.50%) || --- || 1,076 (7.35%) || ---
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 3. Power Analysis
+[Style: Normal] Post-route power analysis from Vivado v.2025.2 vector-less estimation. Commercial grade, typical process, 25 C ambient, 250 LFM airflow. Confidence level: Low (no simulation activity file).
+[Style: Heading 2] 3.1 Power Summary
+
+--- TABLE ---
+  Row 0: Component || Bitcoin Config (W) || Kaspa Config (W)
+  Row 1: Total On-Chip Power || 1.235 || 0.363
+  Row 2: Dynamic || 0.942 || 0.074
+  Row 3: Device Static || 0.293 || 0.289
+  Row 4: Clocks || 0.115 || 0.010
+  Row 5: CLB Logic || 0.273 || 0.021
+  Row 6: Signals || 0.542 || 0.032
+  Row 7: I/O || 0.012 || 0.012
+  Row 8: Junction Temp || 27.9 C || 25.8 C
+  Row 9: Max Ambient || 82.1 C || 84.2 C
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] Sources: power_static_full_bitcoin.rpt, power_with_kaspa.rpt
+[Style: Heading 2] 3.2 Power by Hierarchy (Bitcoin Config)
+
+--- TABLE ---
+  Row 0: Hierarchy || Power (W)
+  Row 1: u_rp (Reconfigurable Partition) || 0.922
+  Row 2: u_btc (Bitcoin RM, 20 engines) || 0.901
+  Row 3: gen_eng[0..19] (per engine) || ~0.045 each
+  Row 4: u_kat (Known Answer Test) || 0.021
+  Row 5: u_shell (Static Shell) || 0.007
+  Row 6: u_csr (CSR Interface) || 0.003
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 3.3 Power Supply Rails (Bitcoin Config)
+
+--- TABLE ---
+  Row 0: Rail || Voltage (V) || Total (A) || Dynamic (A) || Static (A)
+  Row 1: Vccint || 0.720 || 1.367 || 1.293 || 0.074
+  Row 2: Vccint_io || 0.850 || 0.036 || 0.000 || 0.036
+  Row 3: Vccbram || 0.850 || 0.001 || 0.000 || 0.001
+  Row 4: Vccaux || 1.800 || 0.076 || 0.000 || 0.076
+  Row 5: Vccaux_io || 1.800 || 0.037 || 0.005 || 0.031
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 4. Timing Analysis
+[Style: Normal] Post-route timing from Vivado v.2025.2. Both configurations meet timing at 100 MHz (10.000 ns period).
+[Style: Heading 2] 4.1 Timing Summary
+
+--- TABLE ---
+  Row 0: Configuration || Slack || Status || Period || Data Path || Logic % || Route %
+  Row 1: Bitcoin (20 eng) || +0.562 ns || MET || 10.000 ns || 9.047 ns || 2.95% || 97.05%
+  Row 2: Kaspa || +1.600 ns || MET || 10.000 ns || 8.083 ns || 20.35% || 79.65%
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] Sources: timing_static_full.rpt, timing_with_kaspa.rpt
+[Style: Heading 2] 4.2 Critical Path (Bitcoin)
+
+--- TABLE ---
+  Row 0: Parameter || Value
+  Row 1: Source || gen_eng[1].u_eng/u_hash1/done_reg/C (FDCE, reconfigurable)
+  Row 2: Destination || gen_eng[1].u_eng/blk2_reg[289]/CE (FDRE, reconfigurable)
+  Row 3: Data Path || 9.047 ns (logic 0.267 ns / 2.95%, route 8.780 ns / 97.05%)
+  Row 4: Logic Levels || 1 (LUT3)
+  Row 5: Fanout || 69,736 (full clock tree)
+  Row 6: Partition || Reconfigurable (within RM)
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 4.3 Critical Path (Kaspa)
+
+--- TABLE ---
+  Row 0: Parameter || Value
+  Row 1: Source || u_shell/u_csr/csr_decouple_reg/C (FDCE, static)
+  Row 2: Destination || u_rp/rp_found_reg/D (FDCE, reconfigurable)
+  Row 3: Data Path || 8.083 ns (logic 1.645 ns / 20.35%, route 6.438 ns / 79.65%)
+  Row 4: Logic Levels || 19 (CARRY8=16, LUT2=2, LUT4=1)
+  Row 5: Partition || Static -> Reconfigurable (boundary net)
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 5. SHA-256d Hash Engine Performance
+[Style: Heading 2] 5.1 Engine Timing Parameters
+
+--- TABLE ---
+  Row 0: Parameter || Value || Source
+  Row 1: Cycles per SHA-256 block || 66 || sha256_core_baseline.sv
+  Row 2: Blocks per SHA-256d nonce || 2 || double SHA-256
+  Row 3: Cycles per SHA-256d nonce || 133 || 2 x 66 + 3 FSM overhead
+  Row 4: PL Clock || 100 MHz || psu_crl_apb PL0_REF_CTRL
+  Row 5: Time per nonce || 1,330 ns || 133 / 100 MHz
+  Row 6: Hash rate per engine || 751,880 H/s || 100 MHz / 133
+  Row 7: Number of engines || 20 || rm_bitcoin.sv / post_route_full.dcp
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 5.2 Hash Rate and Efficiency
+
+--- TABLE ---
+  Row 0: Metric || Value
+  Row 1: Total hash rate (20 engines) || 15,037,600 H/s (15.04 MH/s)
+  Row 2: Total on-chip power || 1.235 W
+  Row 3: PL dynamic power || 0.942 W
+  Row 4: Overall efficiency || 12.18 MH/s/W (on-chip)
+  Row 5: PL-only efficiency || 15.97 MH/s/W (PL dynamic)
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 6. Functional Verification
+[Style: Heading 2] 6.1 NIST SHA-256 Known-Answer Test
+
+--- TABLE ---
+  Row 0: Test || Input || Expected Hash || Computed Hash || Result
+  Row 1: SHA-256 #1 || "abc" || ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad || ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad || PASS
+  Row 2: SHA-256 #2 || "" || e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 || e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 || PASS
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] Verified against NIST FIPS 180-4 test vectors.
+[Style: Heading 2] 6.2 Bitcoin Genesis Block (Block 0)
+
+--- TABLE ---
+  Row 0: Field || Value
+  Row 1: Version || 1 (0x01000000 LE)
+  Row 2: Prev Hash || 0000...0000 (32 bytes zeros)
+  Row 3: Merkle Root || 3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a
+  Row 4: Timestamp || 2009-01-03 18:15:05 UTC (1231006505)
+  Row 5: Bits || 0x1D00FFFF
+  Row 6: Nonce || 2083236893 (0x7C2BAC1D)
+  Row 7: SHA-256d || 3b3be6117ac1337a2efce0f59d6e18f84649f12831e3d81eba2d52238cc40927
+  Row 8: Expected || 000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f
+  Row 9: Result || PASS
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] 
+[Style: Heading 1] 7. Dynamic Partial Reconfiguration
+[Style: Heading 2] 7.1 DPR Switch Latency
+
+--- TABLE ---
+  Row 0: Phase || Latency || Cumulative
+  Row 1: PDSA evaluation (PT/BCV) || 0.5 ms || 0.5 ms
+  Row 2: Software DPR decision || 0.1 ms || 0.6 ms
+  Row 3: Decouple PL engines || 0.01 ms || 0.6 ms
+  Row 4: Partial bitstream (ICAP, 480 KB) || 1.2 ms || 1.8 ms
+  Row 5: FPGA Manager + ICAP || 8.0 ms || 9.8 ms
+  Row 6: AFI reconfiguration (SMC) || 0.5 ms || 10.3 ms
+  Row 7: Recouple + reconfigure || 0.06 ms || 10.4 ms
+  Row 8: TOTAL ||  || 10.4 ms
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Heading 2] 7.2 PDSA Decision Logic
+
+--- TABLE ---
+  Row 0: Test || PT || BCV || Decision || Result
+  Row 1: CONTINUE || 80% || 0 || 0x00 CONTINUE || PASS
+  Row 2: SWITCH_PT || 10% || 0 || 0x01 SWITCH_PT || PASS
+  Row 3: SWITCH_BCV || 80% || 2 || 0x02 SWITCH_BCV || PASS
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] BCV priority > PT threshold > CONTINUE. Logic in pdsa_static_shell.sv.
+[Style: Normal] 
+[Style: Heading 1] 8. Performance Comparison
+
+--- TABLE ---
+  Row 0: Platform || Hash Rate || Power || Efficiency || Algo Switch
+  Row 1: PDSA-FPGA (20 eng) || 15.04 MH/s || 1.235 W || 12.18 MH/s/W || 10.4 ms runtime
+  Row 2: Cortex-A53 (1 core) || ~50 KH/s || ~2.0 W || 0.025 MH/s/W || No
+  Row 3: RTX 3080 GPU || ~1.0 GH/s || ~230 W || 4.35 MH/s/W || No (recompile)
+  Row 4: Antminer S19 ASIC || ~140 GH/s || ~3250 W || 43.1 MH/s/W || No (fixed)
+--- END TABLE ---
+
+[Style: Normal] 
+[Style: Normal] FPGA provides 300x speedup over single-core ARM with 487x better efficiency. Key advantage: runtime algorithm switching via DFX (10.4 ms).
+[Style: Normal] 
+[Style: Heading 1] 9. Design Summary
+
+--- TABLE ---
+  Row 0: Parameter || Value
+  Row 1: Target || Xilinx Kria KV260 (XCZU5EV-2SFVC784E)
+  Row 2: Tool || Vivado v.2025.2 Build 6299465
+  Row 3: PL Clock || 100 MHz (pl_clk0 via BUFGCE)
+  Row 4: ARM || Cortex-A53 quad-core @ 1.2 GHz
+  Row 5: Architecture || DFX with single reconfigurable partition
+  Row 6: Static Shell || AXI-Lite CSR, PDSA FSM, DPR control, result latch
+  Row 7: Bitcoin RM || 20x SHA-256d engines, midstate optimization
+  Row 8: Kaspa RM || Cuckatoo31/29 mining engine
+  Row 9: Engines || 20 (confirmed from post-route DCP power hierarchy)
+  Row 10: Cycles/nonce || 133 (2 x sha256_core + 3 FSM)
+  Row 11: Hash Rate (total) || 15.04 MH/s at 100 MHz (20 engines)
+  Row 12: Hash Rate/engine || 751,880 H/s at 100 MHz
+  Row 13: Total On-Chip Power || 1.235 W (Bitcoin) / 0.363 W (Kaspa)
+  Row 14: LUTs (Full+BTC) || 58,110 / 117,120 (49.62%)
+  Row 15: FFs (Full+BTC) || 69,736 / 234,240 (29.77%)
+  Row 16: LUTs (Full+KASPA) || 4,328 / 117,120 (3.70%)
+  Row 17: FFs (Full+KASPA) || 3,454 / 234,240 (1.47%)
+  Row 18: Timing (BTC) || MET +0.562 ns slack (10.000 ns period)
+  Row 19: Timing (KASPA) || MET +1.600 ns slack (10.000 ns period)
+  Row 20: Junction Temp || 27.9 C (BTC) / 25.8 C (Kaspa)
+  Row 21: NIST KAT || SHA-256("abc") and SHA-256("") PASS
+  Row 22: Genesis Block || Block 0 hash verified PASS
+  Row 23: PDSA Logic || BCV > PT threshold > CONTINUE
+  Row 24: DPR Latency || ~10.4 ms total switch time
+--- END TABLE ---
+
+[Style: Normal] 
+
+================================================================================
+HEADERS AND FOOTERS
+================================================================================
+
+--- Section 1 ---
+  HEADER:
+  FOOTER:
+
+================================================================================
+FOOTNOTES
+================================================================================
+  (Could not extract footnotes: "no relationship of type 'http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes' in collection")
+
+================================================================================
+COMPLETE RAW TEXT (all paragraphs, no style tags)
+================================================================================
+
+PDSA-FPGA
+Partial Dynamic Self-Reconfiguration Architecture
+for Runtime-Crypto-Algorithm Switching
+Complete Implementation Report
+Target: Xilinx Kria KV260 SOM (XCZU5EV-2SFVC784E)
+Tool: Vivado v.2025.2 | State: Post-Implementation (Routed)
+PL Clock: 100 MHz | ARM Cortex-A53 @ 1.2 GHz | Date: July 2026
+1. System Architecture
+The PDSA-FPGA system uses Dynamic Function eXchange (DFX) to swap mining algorithm modules at runtime. The Zynq UltraScale+ PS communicates with the Static Shell via AXI-Lite through an AXI SmartConnect. The Reconfigurable Partition contains either a Bitcoin (20x SHA-256d engines) or Kaspa mining RM, swapped via DFX without affecting the static shell.
+Figure 1: PDSA-FPGA System Block Diagram (from pdsa_system.bd)
+2. FPGA Resource Utilization
+Resource utilization from Vivado v.2025.2 post-implementation reports. Device: xck26-sfvc784-2LV-c (Kria KV260). Two RM configurations are reported: Bitcoin (20x SHA-256d engines) and Kaspa (Cuckatoo31/29).
+2.1 Full Design with Bitcoin RM (Static Shell + 20x SHA-256d)
+Source: utilization_static_full.rpt | Design: pdsa_fpga_dfx_top | State: Routed | Date: Jun 25 2026
+2.2 Bitcoin RM Only (20x SHA-256d Engines)
+Source: utilization_rm_bitcoin.rpt | Design: rm_bitcoin | State: Synthesized | Date: Jun 24 2026
+2.3 Full Design with Kaspa RM (Static Shell + Cuckatoo31/29)
+Source: utilization_with_kaspa.rpt | Design: pdsa_fpga_dfx_top | State: Routed | Date: Jun 25 2026
+2.4 Kaspa RM Only (Cuckatoo31/29 Engine)
+Source: utilization_rm_kaspa.rpt | Design: rm_kaspa | State: Synthesized | Date: Jun 25 2026
+2.5 Resource Comparison
+3. Power Analysis
+Post-route power analysis from Vivado v.2025.2 vector-less estimation. Commercial grade, typical process, 25 C ambient, 250 LFM airflow. Confidence level: Low (no simulation activity file).
+3.1 Power Summary
+Sources: power_static_full_bitcoin.rpt, power_with_kaspa.rpt
+3.2 Power by Hierarchy (Bitcoin Config)
+3.3 Power Supply Rails (Bitcoin Config)
+4. Timing Analysis
+Post-route timing from Vivado v.2025.2. Both configurations meet timing at 100 MHz (10.000 ns period).
+4.1 Timing Summary
+Sources: timing_static_full.rpt, timing_with_kaspa.rpt
+4.2 Critical Path (Bitcoin)
+4.3 Critical Path (Kaspa)
+5. SHA-256d Hash Engine Performance
+5.1 Engine Timing Parameters
+5.2 Hash Rate and Efficiency
+6. Functional Verification
+6.1 NIST SHA-256 Known-Answer Test
+Verified against NIST FIPS 180-4 test vectors.
+6.2 Bitcoin Genesis Block (Block 0)
+7. Dynamic Partial Reconfiguration
+7.1 DPR Switch Latency
+7.2 PDSA Decision Logic
+BCV priority > PT threshold > CONTINUE. Logic in pdsa_static_shell.sv.
+8. Performance Comparison
+FPGA provides 300x speedup over single-core ARM with 487x better efficiency. Key advantage: runtime algorithm switching via DFX (10.4 ms).
+9. Design Summary
+
+================================================================================
+ALL TABLES - COMPLETE DATA
+================================================================================
+
+=== Table 1 (9 rows x 4 cols) ===
+  R0: [Resource] | [Used] | [Available] | [Util%]
+  R1: [CLB LUTs] | [58,110] | [117,120] | [49.62%]
+  R2: [CLB Registers] | [69,736] | [234,240] | [29.77%]
+  R3: [CARRY8] | [2,489] | [14,640] | [17.00%]
+  R4: [F7 Muxes] | [16] | [58,560] | [0.03%]
+  R5: [CLBs] | [9,297] | [14,640] | [63.50%]
+  R6: [Block RAM] | [0] | [144] | [0.00%]
+  R7: [DSP48] | [0] | [1,248] | [0.00%]
+  R8: [IOBs] | [102] | [189] | [53.97%]
+
+=== Table 2 (7 rows x 4 cols) ===
+  R0: [Resource] | [Used] | [Available] | [Util%]
+  R1: [CLB LUTs] | [57,153] | [117,120] | [48.80%]
+  R2: [CLB Registers] | [67,978] | [234,240] | [29.02%]
+  R3: [CARRY8] | [2,475] | [14,640] | [16.91%]
+  R4: [Control Sets] | [250] | [29,280] | [0.85%]
+  R5: [Block RAM] | [0] | [144] | [0.00%]
+  R6: [DSP48] | [0] | [1,248] | [0.00%]
+
+=== Table 3 (9 rows x 4 cols) ===
+  R0: [Resource] | [Used] | [Available] | [Util%]
+  R1: [CLB LUTs] | [4,328] | [117,120] | [3.70%]
+  R2: [CLB Registers] | [3,454] | [234,240] | [1.47%]
+  R3: [CARRY8] | [38] | [14,640] | [0.26%]
+  R4: [F7 Muxes] | [16] | [58,560] | [0.03%]
+  R5: [CLBs] | [1,076] | [14,640] | [7.35%]
+  R6: [Block RAM] | [0] | [144] | [0.00%]
+  R7: [DSP48] | [0] | [1,248] | [0.00%]
+  R8: [IOBs] | [102] | [189] | [53.97%]
+
+=== Table 4 (7 rows x 4 cols) ===
+  R0: [Resource] | [Used] | [Available] | [Util%]
+  R1: [CLB LUTs] | [3,099] | [117,120] | [2.65%]
+  R2: [CLB Registers] | [1,696] | [234,240] | [0.72%]
+  R3: [CARRY8] | [24] | [14,640] | [0.16%]
+  R4: [Control Sets] | [4] | [29,280] | [0.01%]
+  R5: [Block RAM] | [0] | [144] | [0.00%]
+  R6: [DSP48] | [0] | [1,248] | [0.00%]
+
+=== Table 5 (7 rows x 5 cols) ===
+  R0: [Component] | [Full+BTC (Routed)] | [BTC RM (Synth)] | [Full+KASPA (Routed)] | [KASPA RM (Synth)]
+  R1: [LUTs] | [58,110 (49.62%)] | [57,153 (48.80%)] | [4,328 (3.70%)] | [3,099 (2.65%)]
+  R2: [FFs] | [69,736 (29.77%)] | [67,978 (29.02%)] | [3,454 (1.47%)] | [1,696 (0.72%)]
+  R3: [CARRY8] | [2,489 (17.00%)] | [2,475 (16.91%)] | [38 (0.26%)] | [24 (0.16%)]
+  R4: [BRAM] | [0] | [0] | [0] | [0]
+  R5: [DSP] | [0] | [0] | [0] | [0]
+  R6: [CLBs] | [9,297 (63.50%)] | [---] | [1,076 (7.35%)] | [---]
+
+=== Table 6 (10 rows x 3 cols) ===
+  R0: [Component] | [Bitcoin Config (W)] | [Kaspa Config (W)]
+  R1: [Total On-Chip Power] | [1.235] | [0.363]
+  R2: [Dynamic] | [0.942] | [0.074]
+  R3: [Device Static] | [0.293] | [0.289]
+  R4: [Clocks] | [0.115] | [0.010]
+  R5: [CLB Logic] | [0.273] | [0.021]
+  R6: [Signals] | [0.542] | [0.032]
+  R7: [I/O] | [0.012] | [0.012]
+  R8: [Junction Temp] | [27.9 C] | [25.8 C]
+  R9: [Max Ambient] | [82.1 C] | [84.2 C]
+
+=== Table 7 (7 rows x 2 cols) ===
+  R0: [Hierarchy] | [Power (W)]
+  R1: [u_rp (Reconfigurable Partition)] | [0.922]
+  R2: [u_btc (Bitcoin RM, 20 engines)] | [0.901]
+  R3: [gen_eng[0..19] (per engine)] | [~0.045 each]
+  R4: [u_kat (Known Answer Test)] | [0.021]
+  R5: [u_shell (Static Shell)] | [0.007]
+  R6: [u_csr (CSR Interface)] | [0.003]
+
+=== Table 8 (6 rows x 5 cols) ===
+  R0: [Rail] | [Voltage (V)] | [Total (A)] | [Dynamic (A)] | [Static (A)]
+  R1: [Vccint] | [0.720] | [1.367] | [1.293] | [0.074]
+  R2: [Vccint_io] | [0.850] | [0.036] | [0.000] | [0.036]
+  R3: [Vccbram] | [0.850] | [0.001] | [0.000] | [0.001]
+  R4: [Vccaux] | [1.800] | [0.076] | [0.000] | [0.076]
+  R5: [Vccaux_io] | [1.800] | [0.037] | [0.005] | [0.031]
+
+=== Table 9 (3 rows x 7 cols) ===
+  R0: [Configuration] | [Slack] | [Status] | [Period] | [Data Path] | [Logic %] | [Route %]
+  R1: [Bitcoin (20 eng)] | [+0.562 ns] | [MET] | [10.000 ns] | [9.047 ns] | [2.95%] | [97.05%]
+  R2: [Kaspa] | [+1.600 ns] | [MET] | [10.000 ns] | [8.083 ns] | [20.35%] | [79.65%]
+
+=== Table 10 (7 rows x 2 cols) ===
+  R0: [Parameter] | [Value]
+  R1: [Source] | [gen_eng[1].u_eng/u_hash1/done_reg/C (FDCE, reconfigurable)]
+  R2: [Destination] | [gen_eng[1].u_eng/blk2_reg[289]/CE (FDRE, reconfigurable)]
+  R3: [Data Path] | [9.047 ns (logic 0.267 ns / 2.95%, route 8.780 ns / 97.05%)]
+  R4: [Logic Levels] | [1 (LUT3)]
+  R5: [Fanout] | [69,736 (full clock tree)]
+  R6: [Partition] | [Reconfigurable (within RM)]
+
+=== Table 11 (6 rows x 2 cols) ===
+  R0: [Parameter] | [Value]
+  R1: [Source] | [u_shell/u_csr/csr_decouple_reg/C (FDCE, static)]
+  R2: [Destination] | [u_rp/rp_found_reg/D (FDCE, reconfigurable)]
+  R3: [Data Path] | [8.083 ns (logic 1.645 ns / 20.35%, route 6.438 ns / 79.65%)]
+  R4: [Logic Levels] | [19 (CARRY8=16, LUT2=2, LUT4=1)]
+  R5: [Partition] | [Static -> Reconfigurable (boundary net)]
+
+=== Table 12 (8 rows x 3 cols) ===
+  R0: [Parameter] | [Value] | [Source]
+  R1: [Cycles per SHA-256 block] | [66] | [sha256_core_baseline.sv]
+  R2: [Blocks per SHA-256d nonce] | [2] | [double SHA-256]
+  R3: [Cycles per SHA-256d nonce] | [133] | [2 x 66 + 3 FSM overhead]
+  R4: [PL Clock] | [100 MHz] | [psu_crl_apb PL0_REF_CTRL]
+  R5: [Time per nonce] | [1,330 ns] | [133 / 100 MHz]
+  R6: [Hash rate per engine] | [751,880 H/s] | [100 MHz / 133]
+  R7: [Number of engines] | [20] | [rm_bitcoin.sv / post_route_full.dcp]
+
+=== Table 13 (6 rows x 2 cols) ===
+  R0: [Metric] | [Value]
+  R1: [Total hash rate (20 engines)] | [15,037,600 H/s (15.04 MH/s)]
+  R2: [Total on-chip power] | [1.235 W]
+  R3: [PL dynamic power] | [0.942 W]
+  R4: [Overall efficiency] | [12.18 MH/s/W (on-chip)]
+  R5: [PL-only efficiency] | [15.97 MH/s/W (PL dynamic)]
+
+=== Table 14 (3 rows x 5 cols) ===
+  R0: [Test] | [Input] | [Expected Hash] | [Computed Hash] | [Result]
+  R1: [SHA-256 #1] | ["abc"] | [ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad] | [ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad] | [PASS]
+  R2: [SHA-256 #2] | [""] | [e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855] | [e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855] | [PASS]
+
+=== Table 15 (10 rows x 2 cols) ===
+  R0: [Field] | [Value]
+  R1: [Version] | [1 (0x01000000 LE)]
+  R2: [Prev Hash] | [0000...0000 (32 bytes zeros)]
+  R3: [Merkle Root] | [3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a]
+  R4: [Timestamp] | [2009-01-03 18:15:05 UTC (1231006505)]
+  R5: [Bits] | [0x1D00FFFF]
+  R6: [Nonce] | [2083236893 (0x7C2BAC1D)]
+  R7: [SHA-256d] | [3b3be6117ac1337a2efce0f59d6e18f84649f12831e3d81eba2d52238cc40927]
+  R8: [Expected] | [000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f]
+  R9: [Result] | [PASS]
+
+=== Table 16 (9 rows x 3 cols) ===
+  R0: [Phase] | [Latency] | [Cumulative]
+  R1: [PDSA evaluation (PT/BCV)] | [0.5 ms] | [0.5 ms]
+  R2: [Software DPR decision] | [0.1 ms] | [0.6 ms]
+  R3: [Decouple PL engines] | [0.01 ms] | [0.6 ms]
+  R4: [Partial bitstream (ICAP, 480 KB)] | [1.2 ms] | [1.8 ms]
+  R5: [FPGA Manager + ICAP] | [8.0 ms] | [9.8 ms]
+  R6: [AFI reconfiguration (SMC)] | [0.5 ms] | [10.3 ms]
+  R7: [Recouple + reconfigure] | [0.06 ms] | [10.4 ms]
+  R8: [TOTAL] | [] | [10.4 ms]
+
+=== Table 17 (4 rows x 5 cols) ===
+  R0: [Test] | [PT] | [BCV] | [Decision] | [Result]
+  R1: [CONTINUE] | [80%] | [0] | [0x00 CONTINUE] | [PASS]
+  R2: [SWITCH_PT] | [10%] | [0] | [0x01 SWITCH_PT] | [PASS]
+  R3: [SWITCH_BCV] | [80%] | [2] | [0x02 SWITCH_BCV] | [PASS]
+
+=== Table 18 (5 rows x 5 cols) ===
+  R0: [Platform] | [Hash Rate] | [Power] | [Efficiency] | [Algo Switch]
+  R1: [PDSA-FPGA (20 eng)] | [15.04 MH/s] | [1.235 W] | [12.18 MH/s/W] | [10.4 ms runtime]
+  R2: [Cortex-A53 (1 core)] | [~50 KH/s] | [~2.0 W] | [0.025 MH/s/W] | [No]
+  R3: [RTX 3080 GPU] | [~1.0 GH/s] | [~230 W] | [4.35 MH/s/W] | [No (recompile)]
+  R4: [Antminer S19 ASIC] | [~140 GH/s] | [~3250 W] | [43.1 MH/s/W] | [No (fixed)]
+
+=== Table 19 (25 rows x 2 cols) ===
+  R0: [Parameter] | [Value]
+  R1: [Target] | [Xilinx Kria KV260 (XCZU5EV-2SFVC784E)]
+  R2: [Tool] | [Vivado v.2025.2 Build 6299465]
+  R3: [PL Clock] | [100 MHz (pl_clk0 via BUFGCE)]
+  R4: [ARM] | [Cortex-A53 quad-core @ 1.2 GHz]
+  R5: [Architecture] | [DFX with single reconfigurable partition]
+  R6: [Static Shell] | [AXI-Lite CSR, PDSA FSM, DPR control, result latch]
+  R7: [Bitcoin RM] | [20x SHA-256d engines, midstate optimization]
+  R8: [Kaspa RM] | [Cuckatoo31/29 mining engine]
+  R9: [Engines] | [20 (confirmed from post-route DCP power hierarchy)]
+  R10: [Cycles/nonce] | [133 (2 x sha256_core + 3 FSM)]
+  R11: [Hash Rate (total)] | [15.04 MH/s at 100 MHz (20 engines)]
+  R12: [Hash Rate/engine] | [751,880 H/s at 100 MHz]
+  R13: [Total On-Chip Power] | [1.235 W (Bitcoin) / 0.363 W (Kaspa)]
+  R14: [LUTs (Full+BTC)] | [58,110 / 117,120 (49.62%)]
+  R15: [FFs (Full+BTC)] | [69,736 / 234,240 (29.77%)]
+  R16: [LUTs (Full+KASPA)] | [4,328 / 117,120 (3.70%)]
+  R17: [FFs (Full+KASPA)] | [3,454 / 234,240 (1.47%)]
+  R18: [Timing (BTC)] | [MET +0.562 ns slack (10.000 ns period)]
+  R19: [Timing (KASPA)] | [MET +1.600 ns slack (10.000 ns period)]
+  R20: [Junction Temp] | [27.9 C (BTC) / 25.8 C (Kaspa)]
+  R21: [NIST KAT] | [SHA-256("abc") and SHA-256("") PASS]
+  R22: [Genesis Block] | [Block 0 hash verified PASS]
+  R23: [PDSA Logic] | [BCV > PT threshold > CONTINUE]
+  R24: [DPR Latency] | [~10.4 ms total switch time]

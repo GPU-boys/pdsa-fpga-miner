@@ -1,0 +1,61 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dF:/Documents/Academics/ASIC_miner/pdsa_updated_on_3_6_newv/simulation
+vsha3_256_pipe_engine_hp
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+!s110 1781944385
+!i10b 1
+!s100 b=M3n8;<:Jg@G5EIWdI592
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I5F6^I^bchXZL>:`U[7PIR1
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1781943758
+8F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\sha3_256_pipe_engine_hp.sv
+FF:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\sha3_256_pipe_engine_hp.sv
+!i122 0
+L0 6 317
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1781944385.000000
+!s107 F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\sha3_256_pipe_engine_hp.sv|
+!s90 -sv|-work|work_sha3_iso|+acc|F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\sha3_256_pipe_engine_hp.sv|
+!i113 1
+Z5 o-sv -work work_sha3_iso +acc
+Z6 tCvgOpt 0
+vtb_sha3_isolated
+R1
+!s110 1781944386
+!i10b 1
+!s100 BbieglaRUPa8_QzKz7_;b0
+R2
+I8RoL3h:8mBPc>>>T6AhGz1
+R3
+S1
+R0
+w1781941555
+8F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\tb_sha3_isolated.sv
+FF:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\tb_sha3_isolated.sv
+!i122 1
+L0 2 72
+R4
+r1
+!s85 0
+31
+!s108 1781944386.000000
+!s107 F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\tb_sha3_isolated.sv|
+!s90 -sv|-work|work_sha3_iso|+acc|F:\Documents\Academics\ASIC_miner\pdsa_updated_on_3_6_newv\rtl\tb_sha3_isolated.sv|
+!i113 1
+R5
+R6

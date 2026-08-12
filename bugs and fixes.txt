@@ -1,0 +1,28 @@
+Here's a complete fix plan for all 15 bugs in pdsa_updated_on_3_6_newv:
+---
+🔴 Critical Bugs
+#	File	Fix
+1	rtl/sha256d_real_engine.sv:69	Change 32'h00000080 → 32'h00000280 (blk1 length = 640 bits, not 128)
+2	ps_software/pdsa_main.c:~1048	After submitting nonce, write CSR_CTRL with CTRL_STOP then CTRL_START to clear STATUS_FOUND latch (prevent duplicate submissions)
+3	ps_software/pdsa_main.c:322	Change echo 0 > .../flags → echo 1 > .../flags (partial bitstream flag, not full)
+4	rtl/sha3_256_pipe_engine_hp.sv	Replace XOR placeholder with real Keccak-f[1600] SHA-3 implementation (~500-800 lines)
+🟠 High Bugs
+#	File	Fix
+5	ps_software/pdsa_main.c feed_nist_to_pl()	Add memcmp(pl_hash, nist_expected[vec_idx], 32) after reading result hash
+6	rtl/pdsa_fpga_dfx_top.sv:59	Change .NUM_ENGINES(2) → .NUM_ENGINES(32)
+7	ps_software/pdsa_main.c	Add double-SHA-256 self-test using known Bitcoin block (e.g., genesis) to validate full pipeline
+8	rtl/sha256d_multi_engine_hp.sv:107-113	Fix same-cycle write conflict: when an engine finishes and is re-dispatched in the same cycle, engine_started[i] gets both 1'b0 (line 84) and 1'b1 (line 113) — add guard if (!engine_done[i]) before clearing
+🟡 Medium Bugs
+#	File	Fix
+9	ps_software/pdsa_main.c main loop	Add watchdog: monitor hash_count every ~10s; if unchanged, log warning and restart job
+10	rtl/sha256_core_baseline.sv:63	Remove unused SHA256_IV localparam (used via port); remove unused block_reg
+11	rtl/sha256d_real_engine.sv:19	Remove dead DONE = 2'd3 localparam (state machine has 3 states, not 4)
+12	rtl/sha256d_multi_engine_hp.sv:105	Add hash_count <= 64'd0 when stop_job is asserted
+🔵 Low Bugs
+#	File	Fix
+13	ps_software/pdsa_main.c:308-318	Remove dead-code first snprintf() that's immediately overwritten by the second
+14	ps_software/pdsa_main.c	Add nonce range tracking: detect when golden_nonce + 1 would wrap to 0, then request new job
+15	ps_software/stratum/stratum_client.c	Add mining.set_extranonce handler and version-rolling support
+---
+Implementation order: 1→2→3→5→6→8→12→13→10→11→9→14→15→7→4
+Bugs 1-3 are 1-line changes each. Bugs 4 (real SHA-3) and 15 (version-rolling) are substantial new code. Would you like me to proceed with implementing all of them in this order?

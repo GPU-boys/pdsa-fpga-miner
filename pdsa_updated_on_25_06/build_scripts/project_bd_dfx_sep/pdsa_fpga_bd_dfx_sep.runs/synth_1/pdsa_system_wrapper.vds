@@ -1,0 +1,280 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 19:35:11 GMT 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Wed Jun  3 13:17:13 2026
+# Process ID         : 24240
+# Current directory  : D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1
+# Command line       : vivado.exe -log pdsa_system_wrapper.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source pdsa_system_wrapper.tcl
+# Log file           : D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/pdsa_system_wrapper.vds
+# Journal file       : D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1\vivado.jou
+# Running On         : Abhishek
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26100
+# Processor Detail   : AMD Ryzen 7 7435HS                             
+# CPU Frequency      : 3094 MHz
+# CPU Physical cores : 8
+# CPU Logical cores  : 16
+# Host memory        : 16989 MB
+# Swap memory        : 18107 MB
+# Total Virtual      : 35097 MB
+# Available Virtual  : 9293 MB
+#-----------------------------------------------------------
+source pdsa_system_wrapper.tcl -notrace
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 560.750 ; gain = 221.090
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/Applications/2025.2/Vivado/data/ip'.
+Command: synth_design -top pdsa_system_wrapper -part xck26-sfvc784-2LV-c
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xck26'
+INFO: [Device 21-403] Loading part xck26-sfvc784-2LV-c
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 34092
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 1887.895 ; gain = 208.664
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system_wrapper' [D:/pdsa_fpga_dfx_build/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/hdl/pdsa_system_wrapper.v:13]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:13]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system_axi_smc_0' [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_axi_smc_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system_axi_smc_0' (0#1) [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_axi_smc_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'M00_AXI_awprot' of module 'pdsa_system_axi_smc_0' is unconnected for instance 'axi_smc' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:90]
+WARNING: [Synth 8-7071] port 'M00_AXI_arprot' of module 'pdsa_system_axi_smc_0' is unconnected for instance 'axi_smc' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:90]
+WARNING: [Synth 8-7023] instance 'axi_smc' of module 'pdsa_system_axi_smc_0' has 60 connections declared, but only 58 given [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:90]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system_rm_0_0' [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_rm_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system_rm_0_0' (0#1) [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_rm_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system_static_0_0' [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_static_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system_static_0_0' (0#1) [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_static_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'irq_dpr_done' of module 'pdsa_system_static_0_0' is unconnected for instance 'static_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:165]
+WARNING: [Synth 8-7023] instance 'static_0' of module 'pdsa_system_static_0_0' has 34 connections declared, but only 33 given [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:165]
+INFO: [Synth 8-6157] synthesizing module 'pdsa_system_zynq_ultra_ps_e_0_0' [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_zynq_ultra_ps_e_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system_zynq_ultra_ps_e_0_0' (0#1) [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/.Xil/Vivado-24240-Abhishek/realtime/pdsa_system_zynq_ultra_ps_e_0_0_stub.v:6]
+WARNING: [Synth 8-7071] port 'maxigp2_awid' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awaddr' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awlen' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awsize' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awburst' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awlock' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awcache' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awprot' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awvalid' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awuser' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_wdata' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_wstrb' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_wlast' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_wvalid' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_bready' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arid' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_araddr' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arlen' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arsize' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arburst' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arlock' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arcache' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arprot' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arvalid' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_aruser' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_rready' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_awqos' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7071] port 'maxigp2_arqos' of module 'pdsa_system_zynq_ultra_ps_e_0_0' is unconnected for instance 'zynq_ultra_ps_e_0' [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+WARNING: [Synth 8-7023] instance 'zynq_ultra_ps_e_0' of module 'pdsa_system_zynq_ultra_ps_e_0_0' has 83 connections declared, but only 55 given [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:199]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system' (0#1) [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/synth/pdsa_system.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'pdsa_system_wrapper' (0#1) [D:/pdsa_fpga_dfx_build/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/hdl/pdsa_system_wrapper.v:13]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2016.070 ; gain = 336.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2016.070 ; gain = 336.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 2016.070 ; gain = 336.840
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.013 . Memory (MB): peak = 2016.070 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_zynq_ultra_ps_e_0_0/pdsa_system_zynq_ultra_ps_e_0_0/pdsa_system_zynq_ultra_ps_e_0_0_in_context.xdc] for cell 'pdsa_system_i/zynq_ultra_ps_e_0'
+create_clock: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2017.445 ; gain = 0.055
+Finished Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_zynq_ultra_ps_e_0_0/pdsa_system_zynq_ultra_ps_e_0_0/pdsa_system_zynq_ultra_ps_e_0_0_in_context.xdc] for cell 'pdsa_system_i/zynq_ultra_ps_e_0'
+Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_axi_smc_0/pdsa_system_axi_smc_0/pdsa_system_axi_smc_0_in_context.xdc] for cell 'pdsa_system_i/axi_smc'
+Finished Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_axi_smc_0/pdsa_system_axi_smc_0/pdsa_system_axi_smc_0_in_context.xdc] for cell 'pdsa_system_i/axi_smc'
+Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_static_0_0/pdsa_system_static_0_0/pdsa_system_static_0_0_in_context.xdc] for cell 'pdsa_system_i/static_0'
+Finished Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_static_0_0/pdsa_system_static_0_0/pdsa_system_static_0_0_in_context.xdc] for cell 'pdsa_system_i/static_0'
+Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_rm_0_0/pdsa_system_rm_0_0/pdsa_system_rm_0_0_in_context.xdc] for cell 'pdsa_system_i/rm_0'
+Finished Parsing XDC File [d:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.gen/sources_1/bd/pdsa_system/ip/pdsa_system_rm_0_0/pdsa_system_rm_0_0/pdsa_system_rm_0_0_in_context.xdc] for cell 'pdsa_system_i/rm_0'
+Parsing XDC File [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc]
+WARNING: [Vivado 12-584] No ports matched 'clk'. [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc:6]
+WARNING: [Vivado 12-584] No ports matched 'rst_n'. [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc:9]
+WARNING: [Vivado 12-646] clock 'pl_clk0' not found. [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc:13]
+WARNING: [Vivado 12-646] clock 'pl_clk0' not found. [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc:14]
+Finished Parsing XDC File [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc]
+WARNING: [Project 1-498] One or more constraints failed evaluation while reading constraint file [D:/pdsa_updated_on_2_6/constraints/pdsa_kv260.xdc] and the design contains unresolved black boxes. These constraints will be read post-synthesis (as long as their source constraint file is marked as used_in_implementation) and should be applied correctly then. You should review the constraints listed in the file [.Xil/pdsa_system_wrapper_propImpl.xdc] and check the run log file to verify that these constraints were correctly applied.
+Parsing XDC File [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/dont_touch.xdc]
+Finished Parsing XDC File [D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2017.445 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.011 . Memory (MB): peak = 2017.445 ; gain = 0.000
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 2017.445 ; gain = 338.215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xck26-sfvc784-2LV-c
+INFO: [Synth 8-6742] Reading net delay rules and data
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 2017.445 ; gain = 338.215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 2017.445 ; gain = 338.215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:21 ; elapsed = 00:00:23 . Memory (MB): peak = 2017.445 ; gain = 338.215
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 1248 (col length:96)
+BRAMs: 288 (col length: RAMB18 96 RAMB36 48)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:23 ; elapsed = 00:00:25 . Memory (MB): peak = 2034.070 ; gain = 354.840
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 2744.816 ; gain = 1065.586
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 2744.816 ; gain = 1065.586
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 2756.703 ; gain = 1077.473
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++------+--------------------------------+----------+
+|      |BlackBox name                   |Instances |
++------+--------------------------------+----------+
+|1     |pdsa_system_axi_smc_0           |         1|
+|2     |pdsa_system_rm_0_0              |         1|
+|3     |pdsa_system_static_0_0          |         1|
+|4     |pdsa_system_zynq_ultra_ps_e_0_0 |         1|
++------+--------------------------------+----------+
+
+Report Cell Usage: 
++------+------------------------------+------+
+|      |Cell                          |Count |
++------+------------------------------+------+
+|1     |pdsa_system_axi_smc           |     1|
+|2     |pdsa_system_rm_0              |     1|
+|3     |pdsa_system_static_0          |     1|
+|4     |pdsa_system_zynq_ultra_ps_e_0 |     1|
++------+------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:23 ; elapsed = 00:00:34 . Memory (MB): peak = 3006.234 ; gain = 1325.629
+Synthesis Optimization Complete : Time (s): cpu = 00:00:38 ; elapsed = 00:00:41 . Memory (MB): peak = 3006.234 ; gain = 1327.004
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.014 . Memory (MB): peak = 3006.234 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 3006.234 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 6d87cd02
+INFO: [Common 17-83] Releasing license: Synthesis
+28 Infos, 39 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:46 ; elapsed = 00:00:54 . Memory (MB): peak = 3006.234 ; gain = 2384.000
+INFO: [Common 17-1381] The checkpoint 'D:/pdsa_updated_on_2_6/build_scripts/project_bd_dfx_sep/pdsa_fpga_bd_dfx_sep.runs/synth_1/pdsa_system_wrapper.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file pdsa_system_wrapper_utilization_synth.rpt -pb pdsa_system_wrapper_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Wed Jun  3 13:18:24 2026...

@@ -1,0 +1,154 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/simulation
+vrm_bitcoin
+Z1 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z2 !s110 1782363973
+!i10b 1
+!s100 acV5ga1T_[CAnaaaJ4BeI0
+I2T<fCb^z7=JO;Xf9ZPCli0
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+!s105 rm_bitcoin_sv_unit
+S1
+R0
+Z4 w1781610968
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv
+L0 2
+Z5 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z6 !s108 1782363973.000000
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin.sv|
+!i113 1
+Z7 o-sv -work work_btc +acc
+Z8 tCvgOpt 0
+vrm_bitcoin_wrapper
+R1
+R2
+!i10b 1
+!s100 55YIGlXUSn2M0nHXC]UV]2
+I5_NV;CzgI5W>LCJImVQIh1
+R3
+!s105 rm_bitcoin_wrapper_v_unit
+S1
+R0
+R4
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin_wrapper.v
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin_wrapper.v
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin_wrapper.v|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/rm_bitcoin_wrapper.v|
+!i113 1
+R7
+R8
+vsha256_core_baseline
+R1
+R2
+!i10b 1
+!s100 f1H8;]K?XR1L][3ZiO8<o1
+IhKB_K13^M;l7_gCz^OIFZ0
+R3
+!s105 sha256_core_baseline_sv_unit
+S1
+R0
+w1781775574
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv
+L0 2
+R5
+r1
+!s85 0
+31
+!s108 1782363972.000000
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256_core_baseline.sv|
+!i113 1
+R7
+R8
+vsha256d_multi_engine_hp
+R1
+R2
+!i10b 1
+!s100 ;4G5zMbJ6]nlAi15zG@6?2
+IJ2=MQ97QjDETi`0M9Wb@]3
+R3
+!s105 sha256d_multi_engine_hp_sv_unit
+S1
+R0
+w1781775559
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_multi_engine_hp.sv|
+!i113 1
+R7
+R8
+vsha256d_real_engine
+R1
+R2
+!i10b 1
+!s100 YD9QFdDl4SAGfhJV9eK?X0
+IdF9DBC1`3IB7O><EM;4W23
+R3
+!s105 sha256d_real_engine_sv_unit
+S1
+R0
+w1781775526
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/sha256d_real_engine.sv|
+!i113 1
+R7
+R8
+vtb_rm_bitcoin
+R1
+R2
+!i10b 1
+!s100 <0b^md2ki9M`ZJO=Fj_l@0
+IjhPlGT;9WJ;T2K@78N4Zk2
+R3
+!s105 tb_rm_bitcoin_sv_unit
+S1
+R0
+w1781939577
+8D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_bitcoin.sv
+FD:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_bitcoin.sv
+L0 2
+R5
+r1
+!s85 0
+31
+R6
+!s107 D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_bitcoin.sv|
+!s90 -sv|-work|work_btc|+acc|D:/Projects/Crypto_miner_final_updated_on_18_06/New_updated/pdsa_updated_on_3_6_newv/rtl/tb_rm_bitcoin.sv|
+!i113 1
+R7
+R8

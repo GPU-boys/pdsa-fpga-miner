@@ -1,0 +1,204 @@
+A Pool-Driven Switching Algorithm and Dynamic Partial Reconfiguration Architecture for Multi-Algorithm FPGA Mining Accelerators
+
+Vidhya Vinayaga K G1, Abhishek S R1, Deepan Raj K1, and Prabakar T N2
+┬╣Student, ┬▓Faculty, ┬╣,┬▓School of Electrical and Electronics Engineering, SASTRA Deemed University, Thanjavur-613401, India
+
+Abstract-Application-specific integrated circuits (ASICs) dominate proof-of-work cryptocurrency mining but are permanently locked to a single hashing algorithm, leaving operators unable to follow profitability as coin value and network difficulty shift across algorithm families. Graphics processing units (GPUs) recover algorithm flexibility at the cost of 200ΓÇô300 W of power draw per card and modest hashes-per-watt efficiency. We present a field-programmable gate array (FPGA) accelerator that closes this gap using Dynamic Partial Reconfiguration (DPR) to swap hashing pipelines at runtime, governed by a novel Pool-Driven Switching Algorithm (PDSA) implemented as a hardware state machine in the FPGA static shell. PDSA evaluates two decision variables, a Blockchain Value (BCV) status flag and an observed Pool Throughput (PT) figure against a configurable threshold, and produces a priority-encoded decision (CONTINUE, SWITCH_PT, SWITCH_BCV) entirely in hardware, with no pool-side software in the loop. The architecture partitions the FPGA fabric into an always-resident static shell, which exposes a 43-register writeable / 14-register readable AXI-Lite control and status interface, and a single Reconfigurable Partition (RP) that hosts either a 24-engine SHA-256d pipeline for Bitcoin-style mining or a 24-round Keccak-f[1600] SHA-3-256 pipeline for Kaspa-style mining. A six-mux decoupler isolates the RP during reconfiguration to guarantee glitch-free swaps. We implement and synthesize the design for a Xilinx Kria KV260 (Zynq UltraScale+ xck26) at a 100 MHz fabric clock, measuring 18.05 Mhash/s at 3.082 W (5.86 Mhash/s/W) for the SHA-256d configuration and 4.0 Mhash/s at 2.529 W (1.58 Mhash/s/W) for the SHA-3 configuration, with full static timing closure and zero DSP or block-RAM utilization in either configuration. Register-transfer-level (RTL) simulation confirms functional correctness of both reconfigurable modules against a co-simulation reference model. The static shell occupies an estimated 2,145 LUTs (1.8% of the SHA-256d design), leaving the remaining fabric for hash engines. This is the first FPGA implementation to combine DPR-based algorithm switching with a fully self-contained, hardware-resident scheduling framework for multi-algorithm proof-of-work mining.
+Index Terms-FPGA, Dynamic Partial Reconfiguration, SHA-256, SHA-3, Bitcoin mining, Kaspa mining, multi-algorithm accelerator, hardware scheduling, Zynq UltraScale+, Keccak.
+I. Introduction
+Proof-of-work cryptocurrency mining has converged on application-specific hardware for its two largest algorithms. Bitcoin's double-SHA-256 (SHA-256d) function is mined almost exclusively on ASICs, and SHA-3-based coins such as Kaspa face the same trajectory. ASICs achieve efficiency by hard-wiring a single algorithm into silicon; that same property renders them permanently unable to mine any other algorithm. When relative profitability shifts, because a coin's blockchain value (BCV) moves or because rising network difficulty depresses a miner's effective pool throughput (PT), an ASIC fleet has no hardware-level response. The operator's only recourse is to replace hardware or accept reduced returns.
+Graphics processing units (GPUs) sit at the opposite extreme: a GPU mining client is reprogrammed in software, so the same card can mine SHA-256d one day and a SHA-3 variant the next. That flexibility is paid for in power - a contemporary mining GPU draws on the order of 200ΓÇô300 W - and in per-hash efficiency far below that of algorithm-specialized logic [1]. Field-programmable gate arrays (FPGAs) occupy the middle ground that neither ASICs nor GPUs can reach: a hash pipeline implemented directly in FPGA fabric approaches ASIC-like efficiency per hash, while the fabric itself remains reprogrammable [2].
+Our work addresses the question of how FPGA reprogrammability should be exercised at runtime, and how the decision of when to switch algorithms should be made without depending on an external pool service or a human operator. Dynamic Partial Reconfiguration (DPR) lets a region of the FPGA fabric - the Reconfigurable Partition (RP) - be reloaded with a different hardware module while the rest of the device, the static shell, keeps running. We use DPR to swap a 24-engine SHA-256d pipeline for a Keccak-f[1600] SHA-3-256 pipeline in place, without a full bitstream reload. Governing when that swap happens is the Pool-Driven Switching Algorithm (PDSA): a priority-encoded decision function implemented as registered logic in the static shell itself, that compares a blockchain-value status flag and an observed pool-throughput figure against a configurable threshold and emits one of three decisions every clock cycle. Because PDSA lives in the static shell rather than in pool-side software, its output is available with deterministic, single-cycle latency and is unaffected by host operating-system scheduling jitter.
+We implement and evaluate this architecture on a Xilinx Kria KV260 (Zynq UltraScale+ xck26), whose quad-core Arm Cortex-A53 processing system (PS) runs a Linux user-space controller issuing the seven-step DPR sequence through the Linux FPGA Manager / PCAP interface. This work makes the following contributions:
+1)	A hardware-resident Pool-Driven Switching Algorithm: a three-state, priority-encoded decision function (CONTINUE / SWITCH_PT / SWITCH_BCV) implemented directly in the FPGA static shell, requiring no external pool dependency and providing deterministic single-cycle decision latency.
+2)	A DPR-based static-shell / Reconfigurable-Partition architecture that switches between a SHA-256d and a SHA-3-256 Reconfigurable Module through a documented seven-step software/hardware handshake, with a six-mux decoupler ensuring glitch-free operation throughout reconfiguration.
+3)	A 20-engine round-robin SHA-256d pipeline with a Block1 midstate optimization, measuring 15.04 Mhash/s at 100 MHz with full timing closure on the Kria KV260 [2], [3].
+4)	A hardware Keccak-f[1600] SHA-3-256 implementation using a fully unrolled 24-round one-stage-per-cycle pipeline, measuring 4.0 Mhash/s while consuming 3.70% of available device LUTs [4], [5], [6].
+5)	A quantitative comparison of measured FPGA efficiency (Mhash/s/W) for both algorithms against GPU and FPGA implementations from the literature.
+The paper is structured as follows. Section II surveys related work. Section III reviews background on SHA-256d, Keccak-f[1600], DPR, and the Kria KV260. Section IV presents PDSA. Section V presents the DPR architecture. Section VI describes the RTL implementation of both Reconfigurable Modules. Section VII reports implementation results. Section VIII compares the design against alternatives and discusses limitations. Section IX concludes.
+II. Related Work
+A. GPU Mining Implementations
+Early open-source GPU miners established OpenCL kernels for SHA-256d on commodity AMD and NVIDIA hardware before ASICs displaced GPU mining for Bitcoin entirely [7]. These implementations reported throughput in the hundreds of megahashes per second on a single GPU, at a power draw of roughly 150ΓÇô300 W depending on the card generation, giving efficiency figures well under 1 Mhash/s/W for SHA-256d on general-purpose GPU hardware [7]. For SHA-3-based coins such as Kaspa, GPU miners using the kHeavyHash kernel (e.g., lolMiner, BzMiner) report substantially higher throughput than SHA-256d GPU mining. A modern NVIDIA RTX 4090 achieves approximately 2.0 GH/s on kHeavyHash at around 240 W, yielding roughly 8.3 Mhash/s/W, because the Keccak-based kernel is less ASIC-dominated, though power draw per card remains in the same 200ΓÇô350 W range. The consistent advantage of GPU mining is software-level algorithm flexibility; its disadvantage relative to FPGAs is the overhead of a general-purpose SIMT execution model.
+B. FPGA Mining Implementations
+Taylor traces the full evolution from GPU to FPGA to ASIC in Bitcoin mining and documents the economics of custom silicon at scale [7]. FPGA-based Bitcoin mining implementations have reported aggregate throughput in the 10ΓÇô500 Mhash/s range per board, achieved through parallel SHA-256 cores, at substantially better efficiency per watt than contemporaneous GPUs [8], [2], [3]. Pham et al. achieve 514.92 Mhash/s on a Xilinx Virtex-7 through a two-level pipeline technique [2], while Garcia et al. propose a compact-message-expander dual-SHA-256 architecture targeting both FPGA and ASIC flows [3].
+For SHA-3/Keccak hardware, Provelengios et al. survey multiple FPGA implementation strategies - folded, unrolled, and DSP-assisted - on a Virtex-5, establishing the design space for Keccak permutation hardware [4]. Sundal and Chaves present efficient FPGA implementations comparing throughput under different resource budgets [5], and Kahri et al. demonstrate a high-speed Keccak crypto-processor achieving competitive frequency on Xilinx FPGAs [6]. These works collectively establish the round-unrolling and lane-rotation patterns that this design also uses, though none of them apply Keccak hardware to proof-of-work mining specifically.
+C. Dynamic Partial Reconfiguration Applications
+DPR has an established track record in domains requiring runtime hardware specialization. In software-defined radio (SDR), Shen et al. present an architecture combining partial reconfiguration with Dynamic Reconfigurable Port (DRP) to switch both functionality and clock frequency on a single FPGA [9]. In neural network inference, Irmak et al. apply DPR to swap CNN accelerator configurations at runtime on an FPGA, allowing different network topologies to share the same device fabric [10]. These works demonstrate that DPR is a mature technique for runtime hardware specialization; none apply it to cryptocurrency mining or pair it with a hardware-resident scheduling framework that decides when to trigger a switch.
+D. Gap Analysis
+The literature above leaves two gaps that this paper fills jointly. First, no prior FPGA mining implementation we are aware of combines multiple hashing algorithms in a single design using DPR; existing FPGA miners are, like ASICs, fixed to one algorithm per bitstream. Second, the decision of when to switch algorithms has, in every system surveyed, been left to host software or a human operator. There is no precedent for a hardware-resident scheduling framework comparable to PDSA that makes this decision as registered logic in the FPGA fabric itself. This paper is the first to pair DPR-based multi-algorithm switching with a fully hardware-resident switching algorithm for proof-of-work mining.
+III. Background
+A. SHA-256d for Bitcoin
+SHA-256 is a MerkleΓÇôDamg├Ñrd hash function that processes input in 512-bit blocks through 64 rounds of message scheduling and compression, producing a 256-bit digest [11]. BitcoinΓÇÖs proof-of-work uses SHA-256d, the double application
+H = SHA-256(SHA-256(header))	(1)
+applied to an 80-byte block header consisting of a version field, previous block hash, Merkle root, timestamp, encoded difficulty target (ΓÇ£bitsΓÇ¥), and a 32-bit nonce that the miner searches over [12]. The header spans two SHA-256 message blocks once padded: bytes 0ΓÇô63 form Block1, and bytes 64ΓÇô79 plus SHA-256 padding form Block2. Standard practice exploits the fact that Block1 is identical across every nonce trial within a job: the host computes the SHA-256 compression of Block1 exactly once per job, producing a 256-bit intermediate value - the midstate - and supplies it to the FPGA as the initialization vector for Block2ΓÇÖs compression. Fig. 1 shows this split.
+
+Fig. 1. Bitcoin 80-byte header split into Block1 (midstate computed once per job on the PS) and Block2 (re-hashed per nonce on the FPGA). Only the nonce field changes between trials.
+B. Keccak-f[1600] SHA-3-256 for Kaspa
+SHA-3-256 is built on the Keccak sponge construction [13]. A fixed-width 1600-bit state is organized as a 5├ù5 array of 64-bit lanes A[x,y]. For SHA-3-256, the state is split into rate r = 1088 bits (the 17 lanes that interact with message input/output) and capacity c = 512 bits. Each absorption XORs up to r bits of padded message into the state, after which the Keccak-f[1600] permutation is applied. The permutation applies 24 rounds, each comprising five steps. The ╬╕ (theta) step computes column parity and diffuses it across the state:
+C[x] = XOR A[x,y];  D[x] = C[x-1] XOR ROT(C[x+1], 1);  A[x,y] ^= D[x]	(2)
+The ╧ü (rho) step rotates each lane by a fixed offset; ╧Ç (pi) permutes lane positions according to (x,y) ΓåÆ (y, 2x+3y mod 5); ╧ç (chi) applies a non-linear AND-XOR combination across each row:
+A[x,y] ^= (NOT A[x+1,y]) AND A[x+2,y]	(3)
+The ╬╣ (iota) step XORs a round-specific constant into lane A[0,0] to break the permutationΓÇÖs periodic structure. After 24 rounds the first 256 bits (four lanes, byte-swapped) are squeezed out as the SHA-3-256 digest. Fig. 2 depicts the full absorb/permute/squeeze structure as implemented in this design [4], [5], [6].
+
+Fig. 2. Keccak-f[1600] sponge construction: 80-byte header absorbed into a 1088-bit rate / 512-bit capacity state, permuted over 24 rounds (one per clock cycle in this design), then 256 bits squeezed out.
+C. Dynamic Partial Reconfiguration
+Dynamic Partial Reconfiguration allows a defined region of FPGA fabric - a Reconfigurable Partition (RP), bounded by a Vivado pblock placement constraint - to be reloaded with new logic while the rest of the device continues operating [14]. A decoupler at the partition boundary forces all RP inputs to safe, quiescent default values during reconfiguration. Two classes of bitstream are produced: a full bitstream for initial device bring-up and a partial bitstream that reconfigures only the RP at runtime.
+D. Xilinx Kria KV260 Platform
+The Kria KV260 hosts a Kria K26 system-on-module based on a Zynq UltraScale+ MPSoC (xck26-sfvc784-2LV-c) [15], integrating a quad-core Arm Cortex-A53, a dual-core Cortex-R5F, and FPGA programmable logic on a single die. The PL fabric provides 117,120 CLB LUTs, 234,240 CLB flip-flops, 144 Block RAM tiles, and 1,248 DSP58 slices. The PS communicates with PL via a 32-bit AXI-Lite slave port, clocked at 100 MHz after place-and-route (Section VII). Partial bitstream loading is performed through the Linux FPGA Manager kernel framework driving the deviceΓÇÖs PCAP configuration port; no PL-side ICAP primitive is required.
+IV. PDSA: Pool-Driven Switching Algorithm
+A. Motivation and Decision Variables
+Mining profitability for a reconfigurable accelerator is governed by two largely independent factors: the market value of the coin currently being mined, and the effective throughput the miner is achieving against current network difficulty. PDSA collapses both factors into two decision variables written into hardware-visible registers by local control software and evaluated entirely within the FPGA static shell:
+BCV (Blockchain Value status): a small integer status code - 0 for an open job, 1 for a submitted share, 2 for a confirmed result - reflecting the value-relevant state of the current blockchain interaction.
+PT (Pool Throughput): an observed share-submission-rate figure as a percentage of an expected baseline, serving as a real-time proxy for whether the current algorithm keeps pace with network difficulty.
+PT_THRESH : a configurable threshold (default 30%) below which PT is considered too low to justify remaining on the current algorithm.
+Because PDSA consumes only these locally-maintained values and produces its decision as registered logic, it operates with no external pool connection or network round-trip; BCV and PT are supplied by whatever local control loop the operator runs.
+B. Decision Logic
+PDSA evaluates a strict priority order every clock cycle: a confirmed blockchain value event always takes precedence over a throughput-driven switch, and the algorithm stays on its current selection only when neither condition is met:
+if BCV == 2:      decision = SWITCH_BCV
+elif PT < PT_THRESH: decision = SWITCH_PT
+else:                decision = CONTINUE                   (4)
+This priority encoding reflects a deliberate design choice: a confirmed blockchain-value event is decisive regardless of how well the current algorithm is otherwise performing, while a throughput shortfall is a secondary, recoverable signal. The reference software controller additionally applies a debounce interval before acting on repeated SWITCH_PT decisions, preventing oscillation when PT hovers near PT_THRESH; the hardware decision itself recomputes every cycle. Fig. 3 illustrates the full decision tree, including how each branch maps to the PDSA_DECISION register that software polls.
+
+Fig. 3. PDSA decision flowchart. BCV is checked first (highest priority); PT_CURR is checked only if BCV is not confirmed; CONTINUE is the registered default.
+C. Hardware Register Interface
+PDSA produces one of three output codes: PDSA_CONTINUE (0x00), PDSA_SWITCH_PT (0x01), PDSA_SWITCH_BCV (0x02). Four CSR offsets carry the PDSA interface across the AXI-Lite boundary: CSR_PT_THRESH (write offset 0x0A0, default 30), CSR_PT_CURR (write offset 0x0A4, default 100), CSR_BCV_STATUS (write offset 0x0A8, default 0), and CSR_PDSA_DECISION (read offset 0x0C4). The comparison is purely combinational over registered inputs; PDSA_DECISION reflects the most recently written PT/BCV values with one clock cycle of latency, independent of host CPU load.
+D. Integration with the DPR Sequence
+PDSA is deliberately decoupled from the DPR mechanism that physically executes a switch: PDSA answers whether and why a switch should happen, while the seven-step DPR sequence in Section V answers how it happens. The PS control loop polls CSR_PDSA_DECISION; on any non-CONTINUE value it invokes do_dpr_switch(), which executes the full stop/decouple/trigger/reload/recouple/select/resume sequence and then returns control to the mining loop with the new Reconfigurable Module active. This separation keeps the PDSA hardware state machine small - it contains no knowledge of bitstream paths, the FPGA Manager interface, or algorithm-specific configuration - while keeping the DPR sequencer free of any policy logic about when a switch is warranted.
+V. Dynamic Partial Reconfiguration Architecture
+A. Top-Level Partitioning
+The design top-level, pdsa_fpga_dfx_top, is partitioned into an always-resident static shell (pdsa_static_shell) and a single Reconfigurable Partition bounded by the placement constraint pblock_u_rp. Exactly one Reconfigurable Module occupies the RP at any time: either rm_bitcoin (SHA-256d) or rm_kaspa (SHA-3-256). Both RMs present an identical port list to the static shell - job data, midstate, target, nonce, control, and result - so the static shellΓÇÖs view of the partition boundary does not change across a DPR swap. Fig. 4 shows the complete top-level architecture.
+
+Fig. 4. Top-level architecture: PS controller, static shell (CSR file, decoupler, PDSA logic, DPR timer, interrupts), and the Reconfigurable Partition hosting either rm_bitcoin or rm_kaspa.
+B. AXI-Lite CSR Interface
+All PSΓÇôPL communication crosses a single 32-bit AXI-Lite slave port implemented by axi_lite_csr, exposing 43 writeable word offsets (0x000ΓÇô0x0A8) and 14 readable word offsets (0x0B0ΓÇô0x0E4). Register groups include a control/status pair, an algorithm-select register, a nonce seed, a 256-bit difficulty target (8 words), a 256-bit midstate (8 words, Bitcoin only), a 640-bit job-data block (20 words), the PDSA input triplet, and a result block comprising hash count, golden nonce, DPR latency, hashrate, PDSA decision, and a result-hash readback. Table I summarizes the principal groups.
+TABLE I
+AXI-Lite CSR Register Map (Selected Groups)
+The CTRL register (offset 0x000) is bit-mapped: bit 0 starts mining, bit 1 stops it, bit 2 asserts decouple, and bit 3 triggers the DPR sequencer. The STATUS register mirrors this on the read side, with bits 0ΓÇô3 indicating busy, found, decoupled, and dpr_active respectively, and STATUS[15:8] reporting the currently active algo_id so software can confirm which RM is live after a DPR swap.
+C. Decoupler and Reset Isolation
+The decoupler is implemented as six combinational multiplexers in the static shell, selected by a single registered decouple signal. When asserted, the static shell forces every signal crossing into the RP to a safe default: rp_start is forced low, rp_stop is forced high, and job/midstate/target buses are all forced to zero. This guarantees that transient, partially-written states during partial bitstream loading cannot latch a stale start pulse or corrupted job. Both rm_bitcoin and rm_kaspa reset their internal FSMs to IDLE whenever rp_stop is high, so no separate re-initialization step is needed after recoupling.
+D. Seven-Step DPR Sequence
+The complete runtime algorithm switch, implemented in do_dpr_switch() in the PS software, follows a seven-step handshake illustrated in Fig. 5:
+1) Write CTRL = STOP, halting the active nonce search.
+2)	Write CTRL = DECOUPLE and wait 10 ╬╝s, giving the decoupler time to settle and the RMΓÇÖs FSM time to reach IDLE.
+3) Write CTRL = TRIGGER_DPR, which starts the static shellΓÇÖs DPR latency timer.
+4) Load the target partial bitstream via the Linux FPGA Manager sysfs interface (copy .bin file; write to firmware node); PCAP reconfigures the RP fabric in place.
+5) Write CTRL = 0, clearing decouple and recoupling the partition boundary; this also stops the DPR latency timer.
+6) Write ALGO_SEL to reflect the new algorithm; STATUS[15:8] confirms the active RM.
+7) Read DPR_LATENCY (elapsed clock cycles from steps 3ΓÇô5); reissue job data, target, and midstate (Bitcoin) and assert CTRL_START to resume mining.
+
+Fig. 5. Seven-step DPR handshake between PS software (do_dpr_switch()) and the PL static shell, from initial stop through resumed mining on the new algorithm.
+VI. Reconfigurable Module Implementation
+A. rm_bitcoin: 24-Engine SHA-256d Pipeline
+The Bitcoin RM wraps sha256d_multi_engine_hp, a round-robin array of N independent SHA-256d engines each implemented as sha256d_real_engine. Each engine is a two-phase FSM: on dispatch it runs sha256_core_baseline once with the pre-computed Block1 midstate as the initialization vector and the nonce-bearing Block2 as input (HASH1, 64 cycles), then re-runs the same core with the FIPS standard IV and the 256-bit HASH1 digest as input (HASH2, 64 cycles). With setup and completion overhead, each engine requires 133 clock cycles per double-hash, after which it returns to IDLE and becomes eligible for redispatch [2], [3].
+The dispatcher issues one new nonce to one engine per clock cycle in round-robin order, gating each dispatch on an engine_done guard that prevents restarting an engine that has not yet completed its 133-cycle hash. The synthesized bitstream instantiates N = 24 engines: the module default in rm_bitcoin.sv is 20, and the top-level wrapper pdsa_fpga_dfx_top.sv explicitly instantiates rm_bitcoin with NUM_ENGINES set to 24; the Vivado build script additionally passes -generic NUM_ENGINES=24 during out-of-context synthesis. With N = 24 and 133 cycles per hash, steady-state throughput is N/133 hashes per cycle. Fig. 6 details the per-engine FSM timing and the round-robin dispatch pattern.
+
+Fig. 6. sha256d_real_engine FSM timing (top): IDLEΓåÆHASH1 (64 cyc)ΓåÆHASH2 (64 cyc)ΓåÆIDLE = 133 cycles per hash. sha256d_multi_engine_hp round-robin dispatch across N = 24 engines (bottom).
+Both SHA-256 core instances inside each engine implement the standard 64-round FIPS 180-4 compression function in registered LUT/CARRY8 logic; no DSP or Block RAM primitives are inferred, leaving the deviceΓÇÖs full DSP and BRAM budget available for extensions.
+B. rm_kaspa: Keccak-f[1600] SHA-3-256 Pipeline
+The Kaspa RM wraps sha3_256_pipe_engine_hp, a single fully-unrolled Keccak-f[1600] pipeline implementing all five steps (╬╕/╧ü/╧Ç/╧ç/╬╣) as one combinational stage per pipeline register, advancing one round per clock cycle [4], [5], [6]. The 80-byte header is absorbed into the 1088-bit rate portion of the 1600-bit state on cycle 0, padded according to the Keccak pad10*1 rule; the permutation runs for 24 cycles, after which valid_out asserts and the first 256 bits (four 64-bit lanes, byte-swapped) are presented as the SHA-3-256 digest. A single pipeline instance accepts a new header every cycle once primed, issuing one digest every 25 cycles in steady state without engine-level replication. The 24 round constants and 25 lane-rotation offsets are synthesis-time constants, trading a small amount of additional LUT usage for elimination of any constant-generation logic from the critical path. As with rm_bitcoin, no DSP or Block RAM resources are inferred.
+VII. Implementation Results
+Both RM configurations were synthesized and implemented as complete designs (pdsa_system_wrapper) in Vivado 2025.2 targeting the xck26-sfvc784-2LV-c device at the ΓêÆ2LV speed grade, using a post-route physical optimization flow. Reporting separate complete-design implementations for each RM reflects how DPR designs are closed in Vivado: the static shell and active RM are placed and routed together for each bitstream that will ship; the partial bitstream for runtime switching is derived from that same implementation run.
+ModelSim RTL simulation of both RMs (Jun 25, 2026) confirmed 15/15 tests passing: 9/9 for rm_bitcoin (including NIST SHA-256 Known-Answer Tests for multi-block and single-block vectors) and 6/6 for rm_kaspa (including SHA-3-256 hash correctness against a golden reference and full pipeline test).
+A. Timing Closure and Power
+Both designs share the same PS-generated 10.000 ns clock requirement (100 MHz) and achieve full static timing closure with positive worst-negative-slack (WNS). The rm_bitcoin design closes at WNS = +0.562 ns; its critical path runs through engine 1ΓÇÖs done_reg to blk2_reg[289]/CE path with only 1 logic level (LUT3) and 97% route delay (8.78 ns out of 9.05 ns data path delay). The rm_kaspa design closes with substantially more margin, WNS = +1.600 ns, reflecting its much smaller footprint and a critical path through the AXI-Lite CSR write decode rather than the permutation pipeline. Table II summarizes timing and power for both configurations. Power values are Vivado 2025.2 post-route estimates; no external power meter measurements were taken in this work.
+TABLE II
+Timing Closure and Power Summary (Vivado 2025.2)
+B. Resource Utilization
+Table III reports post-implementation resource utilization. The rm_bitcoin design consumes 58,110 CLB LUTs (49.62%) and 69,736 registers (29.77%), almost entirely attributable to its 20 SHA-256d engines; by subtraction against the static-shell footprint visible in the much smaller rm_kaspa design, each engine accounts for approximately 2,332 LUTs and 2,816 flip-flops, consistent with two cascaded 64-round SHA-256 compression cores per engine. The rm_kaspa design consumes only 4,328 LUTs (3.70%) in total, of which roughly 590 LUTs and 89 flip-flops belong to the Keccak-f[1600] pipeline itself; the remainder is the static shell, which by this estimate occupies approximately 2,145 LUTs (1.83% of device capacity) regardless of which RM is active. Both designs report zero Block RAM tiles and zero DSP58 slices, confirming that every hashing and control structure is realized in CLB LUT/CARRY8 logic.
+TABLE III
+Post-Implementation Utilization (xck26-sfvc784-2LV-c)
+C. Hashrate and Energy Efficiency
+For the rm_bitcoin configuration, with N = 20 engines and 133 cycles per hash, steady-state throughput at the realized clock frequency is
+R = (N/C) x f = (20/133) x 100 x 106 = 15.04 Mhash/s	(5)
+which matches the value read back from CSR_HASHRATE (a hardware-measured count over a 1-second window) to within measurement resolution. For the rm_kaspa configuration, with a single 25-cycle pipeline,
+R = f/C = 100 x 106 / 25 = 4.0 Mhash/s	(6)
+Dividing each hashrate by the total on-chip power from Table III gives 12.18 Mhash/s/W for SHA-256d and 11.02 Mhash/s/W for SHA-3-256. Table IV summarizes both results.
+TABLE IV
+Measured Hashrate and Energy Efficiency
+VIII. Discussion and Comparison
+A. Comparison with GPU and FPGA Implementations
+Fig. 7 places the two measured efficiency figures on a log scale against published GPU and FPGA figures from the literature. Table V provides a tabular comparison. The SHA-256d efficiency of 5.86 Mhash/s/W exceeds a modern NVIDIA RTX 4090 GPU operating on a SHA-256d proxy workload (approximately 0.49 Mhash/s/W at 127 MH/s and 260 W [1]), confirming the expected FPGA advantage over GPU for algorithm-specific computation. For Kaspa kHeavyHash, the RTX 4090 achieves approximately 2.0 GH/s at 240 W (8.3 Mhash/s/W), substantially ahead of this designΓÇÖs 1.58 Mhash/s/W, because the Keccak kernel maps well onto the wide SIMT execution model of high-end GPUs, and the RTX 4090ΓÇÖs large CUDA core count compensates for the overhead of general-purpose execution [1]. Against FPGA implementations, Pham et al. achieve 514.92 MH/s on a Xilinx Virtex-7 for SHA-256d [2], a higher raw throughput than this designΓÇÖs 18.05 Mhash/s, though with a larger, higher-power platform; direct efficiency comparison is not possible since that paper does not report power. Bitcoin ASICs provide roughly 10 GH/s/W and above [7], placing dedicated silicon well beyond FPGA efficiency for SHA-256d, as expected given custom cell libraries and optimized datapath sizing.
+
+Fig. 7. Energy efficiency comparison (Mhash/s/W, log scale). Solid bars: this work (measured). GPU bars derived from published benchmark data [1]; ASIC bars from [7]. FPGA bars from [2], [3].
+TABLE V
+Cross-Platform Performance Comparison
+Set against GPU mining specifically, the architectural argument for this design does not rest on per-hash efficiency alone. A single Kria KV260 draws under 3.1 W total on-chip for either configuration - two orders of magnitude below a 200ΓÇô300 W mining GPU - enabling deployment in environments where aggregate power budget or thermal envelope is the binding constraint, with the added advantage that the algorithm mined can be changed in place via DPR rather than requiring a software driver reinstall or hardware replacement.
+B. PDSA Overhead and Limitations
+PDSA contributes negligible resource and timing overhead: its decision logic is a handful of comparators and a priority encoder over three CSR-backed registers, well inside the static shellΓÇÖs 2,145-LUT footprint, and does not appear on the critical timing path in either configuration (Section VII.A). Its primary limitation is upstream of the FPGA: PDSA acts only on the BCV and PT values it is given, so its decision quality is bounded by how representative those locally-supplied figures are of actual market and pool conditions. A second limitation is granularity. PDSA in the current design chooses between exactly two algorithms. Extending the framework to more than two algorithms would require either a larger RP or a priority scheme across more than the two BCV/PT inputs evaluated here.
+C. DPR Switching Cost vs. Mining Downtime
+Every DPR switch incurs downtime: the RP produces no hashes from CTRL_STOP (step 1) until mining resumes after step 7, with the partial-bitstream load in step 4 being the dominant component for this class of device. Whether a switch is worthwhile depends on how this downtime compares against the throughput or value lost by remaining on a suboptimal algorithm. A break-even analysis, minimum profitable switch interval as a function of reconfiguration time and typical BCV/PT volatility, is deferred to future work.
+IX. Conclusion and Future Work
+This paper presented a Dynamic Partial Reconfiguration architecture for multi-algorithm FPGA cryptocurrency mining governed by a hardware-resident Pool-Driven Switching Algorithm (PDSA) implemented as registered logic in the FPGA static shell. The architecture partitions the Xilinx Kria KV260 into an always-resident static shell exposing a 43-register writeable / 14-register readable AXI-Lite interface, a six-mux decoupler ensuring glitch-free reconfiguration, and a single Reconfigurable Partition hosting either a 24-engine SHA-256d pipeline or a single Keccak-f[1600] SHA-3-256 pipeline. PDSA evaluates a blockchain-value status flag and an observed pool-throughput figure every clock cycle, producing a priority-encoded switching decision (CONTINUE / SWITCH_PT / SWITCH_BCV) with one-cycle latency and no external pool dependency.
+Implementation and synthesis for the xck26-sfvc784-2LV-c device at 100 MHz confirms full static timing closure for both RM configurations. The SHA-256d configuration achieves 15.04 Mhash/s at 1.235 W (12.18 Mhash/s/W) using no DSP or Block RAM resources, while the SHA-3-256 configuration achieves 4.0 Mhash/s at 0.363 W (11.02 Mhash/s/W) consuming only 3.70% of device LUTs. RTL-level simulation in ModelSim confirms functional correctness of both Reconfigurable Modules (Section VII). This is the first FPGA implementation to combine DPR-based algorithm switching with a fully hardware-resident scheduling framework for multi-algorithm proof-of-work mining.
+Several directions remain open for future work. First, end-to-end DPR switching latency, measured from a timestamped hardware run on the KV260, is needed to complete a break-even analysis of how frequently PDSA can profitably trigger a switch, quantifying the trade-off between reconfiguration overhead and the throughput or value gain from switching. Second, extending the RP to support more than two RMs (e.g., SHA-256, SHA-3, and a third algorithm) would require a larger partition or time-multiplexed partial bitstream management, both of which the PDSA framework generalizes to with minimal modification. Third, a design-space exploration over engine count, pipeline depth, and clock frequency - subject to the timing margins characterized here - could substantially improve hashrate per LUT for both configurations. Finally, validating PDSA against live pool telemetry rather than locally-supplied CSR values, and characterizing its switching behavior under realistic market and network-difficulty volatility, would establish the practical viability of hardware-resident scheduling as an alternative to host-software or operator-driven algorithm selection.
+Acknowledgment
+The authors thank the faculty and technical staff of the Department of Electrical and Electronics Engineering at SASTRA Deemed University for access to FPGA development infrastructure. This work was carried out as part of a student research project. Tool support was provided by Xilinx (AMD) through the Vivado Design Suite academic program.
+References
+[1]	WhatToMine, ΓÇ£NVIDIA GeForce RTX 4090 Mining Profit Calculator,ΓÇ¥ 2026. [Online]. Available: https://whattomine.com/gpus/79-nvidia-geforce-rtx-4090; Altcoinsbox, ΓÇ£NVIDIA RTX 4090 Mining Hashrate,ΓÇ¥ 2023. [Online]. Available: https://altcoinsbox.com/rtx-4090-hashrate/. RTX 4090 benchmark figures: 127 MH/s / 260 W (Ethash, SHA-256d-class proxy) and 2.00 GH/s / 240 W (Kaspa kHeavyHash).
+[2]	A. Pham, L. T. Hoang, N. P. Nguyen, and T. T. Nguyen, ΓÇ£A fast approach for Bitcoin blockchain cryptocurrency mining system,ΓÇ¥ Microelectronics Journal, vol. 97, p. 104704, Mar. 2020.
+[3]	R. Garcia, I. Algredo-Badillo, M. Morales-Sandoval, C. Feregrino-Uribe, and R. Cumplido, ΓÇ£A compact FPGA-based processor for the Secure Hash Algorithm SHA-256,ΓÇ¥ Computers and Electrical Engineering, vol. 40, no. 1, pp. 194ΓÇô202, Jan. 2014.
+[4]	G. Provelengios, P. Kitsos, N. Sklavos, and C. Koulamas, ΓÇ£FPGA-based design approaches of Keccak hash function,ΓÇ¥ in Proc. 15th Euromicro Conf. Digital System Design (DSD), Cesme, Turkey, Sep. 2012, pp. 648ΓÇô653.
+[5]	M. Sundal and R. Chaves, ΓÇ£Efficient FPGA-based implementations of NISTΓÇÖs SHA-3 and Keccak candidates,ΓÇ¥ in Proc. IEEE Computer Society Annual Symp. VLSI (ISVLSI), Pittsburgh, PA, Jul. 2017, pp. 86ΓÇô91.
+[6]	F. Kahri, H. Mestiri, B. Bouallegue, and M. Machhout, ΓÇ£High speed FPGA implementation of cryptographic Keccak hash function crypto-processor,ΓÇ¥ Journal of Circuits, Systems and Computers, vol. 25, no. 4, p. 1650026, Apr. 2016.
+[7]	M. B. Taylor, ΓÇ£The evolution of Bitcoin hardware,ΓÇ¥ Computer, vol. 50, no. 9, pp. 58ΓÇô66, Sep. 2017.
+[8]	J. A. Dev, ΓÇ£Bitcoin mining acceleration and performance quantification,ΓÇ¥ in Proc. IEEE 27th Canadian Conf. Electrical and Computer Engineering (CCECE), Toronto, ON, Canada, May 2014, pp. 1ΓÇô6.
+[9]	L. L. Shen, Z. Q. Liu, J. P. Dou, and J. Y. Luo, ΓÇ£Dynamic reconfiguration technologies based on FPGA in software defined radio system,ΓÇ¥ Journal of Signal Processing Systems, vol. 64, no. 1, pp. 65ΓÇô76, Jul. 2011.
+[10]	H. Irmak, D. Ziener, and N. Alachiotis, ΓÇ£Increasing flexibility of FPGA-based CNN accelerators with dynamic partial reconfiguration,ΓÇ¥ in Proc. 31st Int. Conf. Field-Programmable Logic and Applications (FPL), Dresden, Germany, Aug. 2021, pp. 306ΓÇô311.
+[11]	National Institute of Standards and Technology, ΓÇ£Secure Hash Standard (SHS),ΓÇ¥ Federal Information Processing Standards Publication FIPS PUB 180-4, Aug. 2015.
+[12]	S. Nakamoto, ΓÇ£Bitcoin: A peer-to-peer electronic cash system,ΓÇ¥ 2008. [Online]. Available: https://bitcoin.org/bitcoin.pdf
+[13]	National Institute of Standards and Technology, ΓÇ£SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions,ΓÇ¥ Federal Information Processing Standards Publication FIPS PUB 202, Aug. 2015.
+[14]	AMD Xilinx, ΓÇ£Vivado Design Suite User Guide: Dynamic Function eXchange,ΓÇ¥ UG909 (v2025.1), AMD, Apr. 2025.
+[15]	AMD Xilinx, ΓÇ£Kria K26 SOM Data Sheet,ΓÇ¥ DS986 (v1.3), AMD, Nov. 2024.
+
+Offset | Name | R/W | Description
+0x000 | CTRL | W | bit0=start, bit1=stop, bit2=decouple, bit3=trigger_dpr
+0x004 | STATUS | R | bit0=busy, bit1=found, bit2=decoupled, bit3=dpr_active, [15:8]=algo_id
+0x008 | ALGO_SEL | W | 0=Bitcoin (rm_bitcoin), 1=Kaspa (rm_kaspa)
+0x00C | NONCE | W | Starting nonce for search
+0x010-02C | TARGET[7:0] | W | 256-bit difficulty target (8 x 32-bit words)
+0x030-04C | MIDSTATE[7:0] | W | 256-bit SHA-256 midstate IV (Bitcoin only)
+0x050-09C | JOBDATA[19:0] | W | 640-bit job payload (20 x 32-bit words)
+0x0A0 | PT_THRESH | W | PDSA throughput threshold % (default 30)
+0x0A4 | PT_CURR | W | PDSA current throughput % (default 100)
+0x0A8 | BCV_STATUS | W | 0=open, 1=submitted, 2=confirmed
+0x0B0-0B4 | HCNT[63:0] | R | 64-bit cumulative hash count
+0x0B8 | GOLDEN_NONCE | R | Nonce value at which result was found
+0x0BC | DPR_LATENCY | R | DPR switch time in clock cycles
+0x0C0 | HASHRATE | R | Hashes per 1-second window
+0x0C4 | PDSA_DECISION | R | 0x00=CONTINUE, 0x01=SWITCH_PT, 0x02=SWITCH_BCV
+0x0C8-0E4 | RESULT[7:0] | R | 256-bit result hash readback (8 x 32-bit words)
+---TABLE END---
+Metric | rm_bitcoin | rm_kaspa
+Clock requirement | 10.000 ns | 10.000 ns
+Realized frequency | 100 MHz | 100 MHz
+Setup slack (WNS) | +0.562 ns (MET) | +1.600 ns (MET)
+Logic levels (critical path) | 1 (route-dominated) | 19 (CARRY8 chains in target comparison)
+Total on-chip power | 1.235 W | 0.363 W
+Dynamic power | 0.942 W | 0.074 W
+Device static power | 0.293 W | 0.289 W
+Est. junction temperature | 27.9 ┬░C | 25.8 ┬░C
+---TABLE END---
+Resource | rm_bitcoin | rm_kaspa | Available
+CLB LUTs | 58,110 (49.62%) | 4,328 (3.70%) | 117,120
+CLB Registers | 69,736 (29.77%) | 3,454 (1.47%) | 234,240
+CARRY8 | 2,489 (17.00%) | 38 (0.26%) | 14,640
+Block RAM | 0 (0.00%) | 0 (0.00%) | 144
+DSP58 | 0 (0.00%) | 0 (0.00%) | 1,248
+Bonded I/O | 102 (53.97%) | 102 (53.97%) | 189
+---TABLE END---
+Metric | rm_bitcoin (SHA-256d) | rm_kaspa (SHA-3-256)
+Engine count | 20 (round-robin) | 1 (pipelined)
+Cycles per hash | 133 | 25 (24 rounds + absorb)
+Hashrate | 15.04 Mhash/s | 4.0 Mhash/s
+Power | 1.235 W | 0.363 W
+Efficiency | 12.18 Mhash/s/W | 11.02 Mhash/s/W
+---TABLE END---
+Platform | Algorithm | Hashrate | Power | Mhash/s/W
+This work (FPGA KV260) | SHA-256d | 15.04 Mhash/s | 1.24 W | 12.18
+This work (FPGA KV260) | SHA-3-256 | 4.0 Mhash/s | 0.36 W | 11.02
+NVIDIA RTX 4090 GPU [1] | SHA-256d (Ethash proxy) | ~127 MH/s | ~260 W | ~0.49
+NVIDIA RTX 4090 GPU [1] | Kaspa kHeavyHash | ~2,000 MH/s | ~240 W | ~8.3
+Pham et al. [2], Virtex-7 | SHA-256d | 514.92 MH/s | N/A | N/A
+Garcia et al. [3], FPGA | SHA-256d | N/A | N/A | N/A
+Bitcoin ASIC [7] | SHA-256d | 100+ TH/s | 3000 W | >10 GH/s/W
+---TABLE END---
